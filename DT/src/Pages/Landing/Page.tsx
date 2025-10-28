@@ -3,8 +3,12 @@ import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
+import LockPage from "../Lock/Page";
+import { useState } from "react";
 
 function LandingPage() {
+  const [modal, setModal] = useState(false);
+
   useGSAP(() => {
     SplitText.create(".split-header", {
       type: "chars",
@@ -34,6 +38,7 @@ function LandingPage() {
 
   return (
     <>
+      {modal && <LockPage onClose={()=>setModal(false)} />}
       <main className="w-full h-full relative flex justify-center items-center">
         <section className="flex flex-col items-center">
           <img className="w-[72px] h-[130px]" src={phoneImg} alt="Phone" />
@@ -41,7 +46,10 @@ function LandingPage() {
             <span className="text-primary">D</span>igi
             <span className="text-primary">T</span>indahan
           </h1>
-          <button className="absolute bottom-5 bg-primary w-[90%] font-semibold text-black py-3 rounded-full">
+          <button
+            onClick={() => setModal(true)}
+            className="absolute bottom-5 w-[90%] bg-primary font-semibold text-black py-3 rounded-full"
+          >
             Continue
             <div
               id="arrow"
