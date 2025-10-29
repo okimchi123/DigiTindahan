@@ -31,6 +31,7 @@ html, body, #root {
     --color-primary: #59A96A;
     --color-secondary: #9BDEAC;
     --color-gray: #838383;
+    --background-image-greenCard: linear-gradient(90deg, #59A96A 0%, #51D26C 100%);
 }
 
 @utility flex-center{
