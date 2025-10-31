@@ -3,6 +3,7 @@ import LandingPage from './Pages/Landing/Page';
 import RootPage from './Pages/Root/RootPage';
 import NotFoundPage  from './Pages/NotFound/Page';
 import Dashboard from './Pages/Dashboard/Page';
+import CalculateProfit from './Pages/CalculateProfit/Page';
 
 const router = createBrowserRouter([
   {
@@ -14,8 +15,12 @@ const router = createBrowserRouter([
     //change this element as protectedRoute in the future
     children: [
       {
-        path: '/Dashboard',
+        path: '/dashboard',
         element: <Dashboard />,
+      },
+      {
+        path: '/calculate-profit',
+        element: <CalculateProfit />,
       },
     ]
   },
