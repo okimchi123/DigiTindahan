@@ -31,6 +31,7 @@ html, body, #root {
     --color-primary: #59A96A;
     --color-secondary: #9BDEAC;
     --color-gray: #838383;
+    --color-input: #8EFFA6;
     --background-image-greenCard: linear-gradient(90deg, #59A96A 0%, #51D26C 100%);
 }
 
@@ -44,4 +45,13 @@ html, body, #root {
   justify-content: center;
   flex-direction: column;
   align-items: center;
+}
+@utility header-font {
+  @apply text-[36px] leading-8 font-bold;
+}
+@utility input-design {
+  @apply bg-input p-2 rounded-lg focus:outline focus:outline-green-500;
+}
+@utility button-calc-design {
+  @apply flex items-center gap-1 text-white font-bold rounded-full bg-[#4CC766] py-3 px-12 text-xl;
 }
