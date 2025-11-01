@@ -32,6 +32,7 @@ html, body, #root {
     --color-secondary: #9BDEAC;
     --color-gray: #838383;
     --color-input: #8EFFA6;
+    --color-light-green: #4CC766;
     --background-image-greenCard: linear-gradient(90deg, #59A96A 0%, #51D26C 100%);
 }
 
