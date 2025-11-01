@@ -4,6 +4,7 @@ import RootPage from './Pages/Root/RootPage';
 import NotFoundPage  from './Pages/NotFound/Page';
 import Dashboard from './Pages/Dashboard/Page';
 import CalculateProfit from './Pages/CalculateProfit/Page';
+import GroceryList from './Pages/Grocery-List/Page';
 
 const router = createBrowserRouter([
   {
@@ -21,6 +22,10 @@ const router = createBrowserRouter([
       {
         path: '/calculate-profit',
         element: <CalculateProfit />,
+      },
+      {
+        path: '/grocery-list',
+        element: <GroceryList />,
       },
     ]
   },
