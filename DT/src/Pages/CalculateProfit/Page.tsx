@@ -1,4 +1,6 @@
+import { useGSAP } from "@gsap/react";
 import clsx from "clsx";
+import gsap from "gsap";
 import { useState, useEffect } from "react";
 
 interface formProp {
@@ -55,8 +57,18 @@ export default function CalculateProfit() {
     }
   }, [form.POR, form.QTY, form.SP, form.PP]);
 
+  useGSAP(()=>{
+    gsap.fromTo('#cont',
+      { x: '100%' },
+      { 
+        x: 0,
+        duration: 0.2,
+        ease: 'power2.inOut'
+      });
+  },[])
+
   return (
-    <>
+    <div id="cont" className="container">
       <header className="flex flex-col items-center py-8">
         <h1 className="header-font">Calculate Profit</h1>
         <h2 className={clsx("text-[36px] text-gray",{
@@ -134,6 +146,6 @@ export default function CalculateProfit() {
           Clear all
         </button>
       </form>
-    </>
+    </div>
   );
 }
