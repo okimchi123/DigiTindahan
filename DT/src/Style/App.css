@@ -54,7 +54,7 @@ html, body, #root {
   @apply bg-input p-2 rounded-lg focus:outline focus:outline-green-500;
 }
 @utility button-calc-design {
-  @apply flex items-center gap-1 text-white font-bold rounded-full bg-[#4CC766] py-3 px-12 text-xl;
+  @apply flex items-center gap-1 text-white font-bold rounded-full bg-light-green py-3 px-12 text-xl;
 }
 @utility container{
   @apply w-full h-full flex flex-col items-center;
