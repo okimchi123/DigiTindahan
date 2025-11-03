@@ -69,7 +69,7 @@ export default function CalculateProfit() {
 
   return (
     <div id="cont" className="container">
-      <header className="flex flex-col items-center py-8">
+      <header className="header-cont">
         <h1 className="header-font">Calculate Profit</h1>
         <h2 className={clsx("text-[36px] text-gray",{
             "text-light-green":profit==='win',
@@ -80,8 +80,8 @@ export default function CalculateProfit() {
         </h2>
         <p className="font-semibold text-[18px]">{profit==='win' ? "Made Profit" : profit==='lose' ? "Loss Made" : "No Profit"}</p>
       </header>
-      <form className="flex-col-center gap-3">
-        <div className="flex flex-col items-start">
+      <form className="flex-col-center py-1 gap-3">
+        <div className="input-label-cont">
           <label className="font-semibold text-[18px]" htmlFor="ogprice">
             Product Original Price
           </label>
@@ -96,7 +96,7 @@ export default function CalculateProfit() {
             min="0"
           />
         </div>
-        <div className="flex flex-col items-start">
+        <div className="input-label-cont">
           <label className="font-semibold text-[18px]" htmlFor="qnt">
             Quantity
           </label>
@@ -110,7 +110,7 @@ export default function CalculateProfit() {
             placeholder="0"
           />
         </div>
-        <div className="flex flex-col items-start">
+        <div className="input-label-cont">
           <label className="font-semibold text-[18px]" htmlFor="sp">
             Selling Price
           </label>
@@ -124,7 +124,7 @@ export default function CalculateProfit() {
             placeholder="0"
           />
         </div>
-        <div className="flex flex-col items-start">
+        <div className="input-label-cont">
           <label className="font-semibold text-[18px]" htmlFor="pp">
             Per Piece
           </label>
