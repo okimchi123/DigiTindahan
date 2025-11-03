@@ -7,6 +7,10 @@ html, body, #root {
   width: 100%;
 }
 
+input:focus{
+  outline: 1px solid oklch(72.3% 0.219 149.579);
+}
+
 @font-face {
   font-family: 'Gilroy';
   src: url('./fonts/Gilroy-Regular.ttf') format('truetype');
@@ -33,6 +37,7 @@ html, body, #root {
     --color-gray: #838383;
     --color-input: #8EFFA6;
     --color-light-green: #4CC766;
+    --color-light-gray: #C2C2C2;
     --background-image-greenCard: linear-gradient(90deg, #59A96A 0%, #51D26C 100%);
 }
 
@@ -50,12 +55,18 @@ html, body, #root {
 @utility header-font {
   @apply text-[36px] leading-8 font-bold;
 }
+@utility header-cont {
+  @apply flex flex-col items-center py-8;
+}
 @utility input-design {
-  @apply bg-input p-2 rounded-lg focus:outline focus:outline-green-500;
+  @apply bg-input p-2 rounded-lg;
 }
 @utility button-calc-design {
   @apply flex items-center gap-1 text-white font-bold rounded-full bg-light-green py-3 px-12 text-xl;
 }
 @utility container{
   @apply w-full h-full flex flex-col items-center;
+}
+@utility input-label-cont{
+  @apply flex flex-col items-start gap-px;
 }
