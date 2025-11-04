@@ -34,7 +34,7 @@ const LockPage: React.FC<props> = ({ onClose }) => {
       stagger: 0.1,
       duration: 0.2,
     });
-    tl.timeScale(3)
+    tl.timeScale(3);
   };
 
   const btnClick = (num: number) => {
@@ -69,10 +69,7 @@ const LockPage: React.FC<props> = ({ onClose }) => {
   };
 
   return (
-    <div
-      id="container"
-      className="modal gap-4"
-    >
+    <div id="container" className="modal gap-4 justify-center">
       <header className="flex flex-col gap-2 items-center">
         <img className="h-[130px] w-[72px]" src={LockImage} alt="" />
         <h1 className="text-[20px] tracking-wider">Enter Passcode</h1>
