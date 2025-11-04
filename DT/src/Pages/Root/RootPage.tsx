@@ -10,7 +10,7 @@ export default function RootPage() {
   const navigate = useNavigate();
 
   const handleBack = () => {
-    const targetElement = document.querySelector('#cont');
+    const targetElement = document.querySelector('#animated-container');
 
     if (targetElement) {
       gsap.to(targetElement, {
