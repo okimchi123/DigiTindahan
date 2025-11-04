@@ -1,9 +1,10 @@
 import { Plus } from "lucide-react";
 import Lists from "../../Components/Grocery-list/Lists";
+import AnimatedPage from "../../Components/UI/Animated-Container";
 
 export default function GroceryList() {
   return (
-    <>
+    <AnimatedPage className="container">
       <div className="header-cont gap-4">
         <h1 className="header-font">Grocery list</h1>
         <button className="p-3 bg-primary rounded-full">
@@ -11,6 +12,6 @@ export default function GroceryList() {
         </button>
       </div>
       <Lists />
-    </>
+    </AnimatedPage>
   );
 }

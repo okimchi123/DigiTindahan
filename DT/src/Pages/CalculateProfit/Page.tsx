@@ -1,8 +1,7 @@
-import { useGSAP } from "@gsap/react";
 import clsx from "clsx";
-import gsap from "gsap";
 import { useState, useEffect } from "react";
 import Calculate from "../../Components/Calcu-Profit/Calculate";
+import AnimatedPage from "../../Components/UI/Animated-Container";
 
 interface formProp {
   POR: number;
@@ -34,20 +33,8 @@ export default function CalculateProfit() {
     }
   }, [form.POR, form.QTY, form.SP, form.PP]);
 
-  useGSAP(() => {
-    gsap.fromTo(
-      "#cont",
-      { x: "100%" },
-      {
-        x: 0,
-        duration: 0.2,
-        ease: "power2.inOut",
-      }
-    );
-  }, []);
-
   return (
-    <div id="cont" className="container">
+    <AnimatedPage className="container">
       <header className="header-cont">
         <h1 className="header-font">Calculate Profit</h1>
         <h2
@@ -73,6 +60,6 @@ export default function CalculateProfit() {
         setTotal={setTotal}
         setProfit={setProfit}
       />
-    </div>
+    </AnimatedPage>
   );
 }
