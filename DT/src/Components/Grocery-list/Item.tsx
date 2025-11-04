@@ -1,11 +1,17 @@
 import AnimatedPage from "../UI/Animated-Container";
 import gsap from "gsap";
+import { ChevronLeft } from "lucide-react";
+import AddItem from "./Add-item";
+import { useEffect, useState } from "react";
 
 interface props {
   onClose: () => void;
+  isAdd: boolean;
 }
 
-const Item: React.FC<props> = ({ onClose }) => {
+const Item: React.FC<props> = ({ isAdd , onClose }) => {
+  const [isAddOpen, setIsAddOpen] = useState(false);
+
   const closeModal = () => {
     gsap.to('.modal', {
       x: "100%",
@@ -17,11 +23,31 @@ const Item: React.FC<props> = ({ onClose }) => {
     });
   };
 
+  useEffect(()=>{
+    if(isAdd){
+      setTimeout(() => {
+        setIsAddOpen(true);
+      }, 250);
+     
+    }
+  },[])
+
   return (
+    <>
+    {isAddOpen && <AddItem isOpen={isAddOpen} onExit={()=>setIsAddOpen(false)} />}
     <AnimatedPage className="modal">
-      <h1>Item</h1>
-      <button onClick={closeModal}>close</button>
+      <nav aria-label="Close dialog" className="w-full flex justify-between pr-4 py-4">
+        <div className="flex items-center">
+          <button onClick={closeModal}><ChevronLeft size='31'/></button>
+        <h1 className="text-[18px] font-bold">
+          Create List
+        </h1>
+        </div>
+        <button className="text-primary/70 font-bold p-1 text-lg">Save</button>
+      </nav>
     </AnimatedPage>
+    </>
+    
   );
 };
 
