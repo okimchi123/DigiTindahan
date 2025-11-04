@@ -1,17 +1,25 @@
 import { Plus } from "lucide-react";
 import Lists from "../../Components/Grocery-list/Lists";
 import AnimatedPage from "../../Components/UI/Animated-Container";
+import Item from "../../Components/Grocery-list/Item";
+import { useState } from "react";
 
 export default function GroceryList() {
+  const [modal, setModal] = useState(false)
+  
   return (
+    <>
+    { modal && <Item onClose={()=>setModal(false)} />}
     <AnimatedPage className="container">
       <div className="header-cont gap-4">
         <h1 className="header-font">Grocery list</h1>
-        <button className="p-3 bg-primary rounded-full">
+        <button onClick={()=>setModal(true)} className="p-3 bg-primary rounded-full">
           <Plus size="26" color="white" />
         </button>
       </div>
       <Lists />
     </AnimatedPage>
+    </>
+    
   );
 }
