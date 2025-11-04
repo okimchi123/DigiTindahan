@@ -1,4 +1,4 @@
-import { Outlet, useLocation, Link } from "react-router-dom";
+import { Outlet, useLocation } from "react-router-dom";
 import { ChevronLeft } from "lucide-react";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
