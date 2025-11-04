@@ -71,7 +71,7 @@ const LockPage: React.FC<props> = ({ onClose }) => {
   return (
     <div
       id="container"
-      className="absolute flex-col-center gap-4 inset-0 z-1 bg-white"
+      className="modal gap-4"
     >
       <header className="flex flex-col gap-2 items-center">
         <img className="h-[130px] w-[72px]" src={LockImage} alt="" />
