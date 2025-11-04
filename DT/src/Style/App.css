@@ -53,7 +53,7 @@ input:focus{
   align-items: center;
 }
 @utility modal{
-  @apply absolute flex-col-center inset-0 z-1 bg-white;
+  @apply absolute flex flex-col items-center inset-0 z-1 bg-white;
 }
 @utility header-font {
   @apply text-[36px] leading-8 font-bold;
