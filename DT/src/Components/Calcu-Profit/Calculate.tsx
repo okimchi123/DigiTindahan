@@ -30,7 +30,7 @@ const Calculate: React.FC<props> = ({ form, setForm, setTotal, setProfit }) => {
   };
 
   return (
-    <form className="flex-col-center py-1 gap-3">
+    <form name="calcu-form" className="flex-col-center py-1 gap-3">
       <div className="input-label-cont">
         <label className="font-semibold text-[18px]" htmlFor="ogprice">
           Product Original Price
