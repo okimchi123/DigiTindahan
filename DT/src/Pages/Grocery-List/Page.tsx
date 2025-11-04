@@ -5,15 +5,21 @@ import Item from "../../Components/Grocery-list/Item";
 import { useState } from "react";
 
 export default function GroceryList() {
-  const [modal, setModal] = useState(false)
+  const [modal, setModal] = useState(false);
+  const [isAdd, setIsAdd] = useState(false);
   
+  const onAdd = () => {
+    setModal(true);
+    setIsAdd(true);
+  }
+
   return (
     <>
-    { modal && <Item onClose={()=>setModal(false)} />}
+    { modal && <Item isAdd={isAdd} onClose={()=>setModal(false)} />}
     <AnimatedPage className="container">
       <div className="header-cont gap-4">
         <h1 className="header-font">Grocery list</h1>
-        <button onClick={()=>setModal(true)} className="p-3 bg-primary rounded-full">
+        <button onClick={onAdd} className="p-3 bg-primary rounded-full">
           <Plus size="26" color="white" />
         </button>
       </div>
