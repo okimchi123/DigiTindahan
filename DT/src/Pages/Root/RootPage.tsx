@@ -28,7 +28,7 @@ export default function RootPage() {
 
   return (
     <main className="w-full h-full relative flex flex-col items-center justify-start">
-      <nav className={clsx("py-4",{
+      <nav aria-label="main" className={clsx("py-4",{
         "w-full":pathname !== '/dashboard',
         "w-[83%]":pathname === '/dashboard',
       })}>
