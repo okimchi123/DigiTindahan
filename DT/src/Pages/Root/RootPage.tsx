@@ -27,7 +27,7 @@ export default function RootPage() {
   };
 
   return (
-    <main className="w-full h-full relative flex flex-col items-center justify-start">
+    <main id="mainPage" className="w-full h-full relative flex flex-col items-center justify-start">
       <nav aria-label="main" className={clsx("py-4",{
         "w-full":pathname !== '/dashboard',
         "w-[83%]":pathname === '/dashboard',
@@ -39,7 +39,6 @@ export default function RootPage() {
           <span className="text-primary">T</span>indahan
         </h1>
         </div>
-      
       </nav>
       <Outlet />
     </main>
