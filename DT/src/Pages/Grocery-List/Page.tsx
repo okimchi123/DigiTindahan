@@ -1,7 +1,7 @@
 import { Plus } from "lucide-react";
 import Lists from "../../Components/Grocery-list/Lists";
 import AnimatedPage from "../../Components/UI/Animated-Container";
-import Item from "../../Components/Grocery-list/Item";
+import Item from "../../Components/Grocery-list/CreateItem";
 import { useState } from "react";
 
 export default function GroceryList() {
