@@ -73,3 +73,6 @@ input:focus{
 @utility input-label-cont{
   @apply flex flex-col items-start gap-px;
 }
+@utility list-card{
+  @apply flex items-center text-xl transition-all font-bold justify-between border-3 rounded-xl py-3 pl-2 pr-4
+}
