@@ -5,11 +5,16 @@ import NotFoundPage  from './Pages/NotFound/Page';
 import Dashboard from './Pages/Dashboard/Page';
 import CalculateProfit from './Pages/CalculateProfit/Page';
 import GroceryList from './Pages/Grocery-List/Page';
+import LoginPage from './Pages/Lock/Login';
 
 const router = createBrowserRouter([
   {
     path: '/',
     element: <LandingPage />,
+  },
+  {
+    path:'/login',
+    element: <LoginPage />
   },
   {
     element: <RootPage />,
