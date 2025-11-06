@@ -72,7 +72,7 @@ const LockPage: React.FC<props> = ({ onClose }) => {
     <div id="container" className="modal gap-4 justify-center">
       <header className="flex flex-col gap-2 items-center">
         <img className="h-[130px] w-[72px]" src={LockImage} alt="" />
-        <h1 className="text-[20px] tracking-wider">Enter Passcode</h1>
+        <h1 className="text-[20px] font-semibold tracking-wider">Enter Passcode</h1>
         <div className="flex gap-4">
           {[...Array(INPUT_LENGTH)].map((_, index) => (
             <div

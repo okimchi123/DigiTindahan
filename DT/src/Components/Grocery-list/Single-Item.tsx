@@ -15,7 +15,7 @@ const SingleItem: React.FC<props> = ({ item }) => {
   return (
     <>
       <div>
-        <label className="flex items-center gap-2 active:bg-gray-50">
+        <label className="flex items-center gap-2">
           <input
             type="checkbox"
             className="sr-only"
