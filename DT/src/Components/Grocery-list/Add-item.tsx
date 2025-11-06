@@ -1,7 +1,8 @@
-import { useState, useEffect, useRef } from "react";
+import { useEffect, useRef } from "react";
 import { X } from "lucide-react";
-import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
+import { useKeyboardHeight } from "../../Hooks/CustomKH";
+import FloatingInput from "../UI/Floating-Input";
 
 interface props {
   isOpen: boolean;
@@ -9,7 +10,7 @@ interface props {
 }
 
 const AddItem: React.FC<props> = ({ isOpen, onExit }) => {
-  const [keyboardHeight, setKeyboardHeight] = useState(0);
+  const keyboardHeight = useKeyboardHeight(isOpen);
   const inputRef = useRef<HTMLInputElement | null>(null);
 
   useEffect(() => {
@@ -18,57 +19,23 @@ const AddItem: React.FC<props> = ({ isOpen, onExit }) => {
     }
   }, []);
 
-  useEffect(() => {
-    const handleResize = () => {
-      if (isOpen) {
-        const visualViewport = window.visualViewport;
-        if (visualViewport) {
-          const keyboardHeight = window.innerHeight - visualViewport.height;
-          setKeyboardHeight(keyboardHeight);
-        }
-      }
-    };
-
-    if (window.visualViewport) {
-      window.visualViewport.addEventListener("resize", handleResize);
-    }
-    return () => {
-      if (window.visualViewport) {
-        window.visualViewport.removeEventListener("resize", handleResize);
-      }
-    };
-  }, [isOpen]);
-
   const onClose = () => {
     gsap.to('#add',{
       duration: 0.1,
       scale: 0,
       opacity: 0,
       onComplete: ()=>{
-      setKeyboardHeight(0);
       onExit();  
       }
     })
   };
 
-  useGSAP(()=>{
-    gsap.to('#add',
-    { 
-      duration: 0.08, 
-      opacity:1,
-      scale: 1, 
-      ease: "expo.out"
-    }
-  )
-  },[])
-
   return (
     <>
-      <div onClick={onClose} className="fixed inset-0 bg-black/10 z-10" />
-      <div
-        id="add"
-        className={`fixed flex flex-col scale-0 gap-4 px-5 left-0 right-0 pt-5 pb-4 bg-white rounded-t-xl z-20 transition-all `}
-        style={{bottom: `${keyboardHeight}px`}}
+      <div onClick={onClose} className="fixed inset-0 bg-black/10 z-31" />
+      <FloatingInput
+        className="bg-white z-31"
+        keyboardHeight={keyboardHeight}
       >
         <nav
           aria-label="Close dialog"
@@ -77,7 +44,7 @@ const AddItem: React.FC<props> = ({ isOpen, onExit }) => {
           <button className="p-1" onClick={onClose}>
             <X size="24" />
           </button>
-          <h1 className="font-semibold text-lg">New Item</h1>
+          <h1 className="floating-h1 text-black">New Item</h1>
         </nav>
         <input
           name="productName"
@@ -95,7 +62,7 @@ const AddItem: React.FC<props> = ({ isOpen, onExit }) => {
         <button className="self-end text-primary/70 font-bold p-1 text-lg">
           Add
         </button>
-      </div>
+      </FloatingInput>
     </>
   );
 };
