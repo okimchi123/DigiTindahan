@@ -3,11 +3,10 @@ import { ArrowRight } from "lucide-react";
 import gsap from "gsap";
 import { SplitText } from "gsap/SplitText";
 import { useGSAP } from "@gsap/react";
-import LockPage from "../Lock/Page";
-import { useState } from "react";
+import { useNavigate } from "react-router-dom";
 
-function LandingPage() {
-  const [modal, setModal] = useState(false);
+export default function LandingPage() {
+  const navigate = useNavigate();
 
   useGSAP(() => {
     SplitText.create(".split-header", {
@@ -36,9 +35,12 @@ function LandingPage() {
     );
   }, {});
 
+  const onContinue = () => {
+    navigate('/login')
+  }
+
   return (
     <>
-      {modal && <LockPage onClose={()=>setModal(false)} />}
       <main className="w-full h-full relative flex justify-center items-center">
         <section className="flex flex-col items-center">
           <img className="w-[72px] h-[130px]" src={phoneImg} alt="Phone" />
@@ -47,7 +49,7 @@ function LandingPage() {
             <span className="text-primary">T</span>indahan
           </h1>
           <button
-            onClick={() => setModal(true)}
+            onClick={onContinue}
             className="absolute bottom-5 w-[90%] bg-primary font-semibold text-black py-3 rounded-full"
           >
             Continue
@@ -63,5 +65,3 @@ function LandingPage() {
     </>
   );
 }
-
-export default LandingPage;
