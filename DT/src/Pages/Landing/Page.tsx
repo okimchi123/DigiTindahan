@@ -36,12 +36,19 @@ export default function LandingPage() {
   }, {});
 
   const onContinue = () => {
-    navigate('/login')
+    gsap.to('#cont', {
+          x:'-100%',
+          duration:0.3,
+          ease: 'power2.inOut',
+          onComplete: ()=>{
+            navigate('/login')
+          },
+        });
   }
 
   return (
     <>
-      <main className="w-full h-full relative flex justify-center items-center">
+      <main id="cont" className="w-full h-full relative flex justify-center items-center">
         <section className="flex flex-col items-center">
           <img className="w-[72px] h-[130px]" src={phoneImg} alt="Phone" />
           <h1 className="split-header text-[36px] font-semibold">
@@ -50,14 +57,14 @@ export default function LandingPage() {
           </h1>
           <button
             onClick={onContinue}
-            className="absolute bottom-5 w-[90%] bg-primary font-semibold text-black py-3 rounded-full"
+            className="absolute bottom-5 w-[90%] bg-primary text-lg font-semibold text-white py-3 rounded-full"
           >
             Continue
             <div
               id="arrow"
-              className="absolute p-1 bg-black rounded-full right-4 top-2"
+              className="absolute p-1 bg-white rounded-full right-4 top-2"
             >
-              <ArrowRight size="22" color="white" />
+              <ArrowRight size="22" color="black" />
             </div>
           </button>
         </section>
