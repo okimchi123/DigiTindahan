@@ -6,7 +6,7 @@ import Dashboard from './Pages/Dashboard/Page';
 import CalculateProfit from './Pages/CalculateProfit/Page';
 import GroceryList from './Pages/Grocery-List/Page';
 import LoginPage from './Pages/Lock/Login';
-
+import SignupPage from './Pages/Lock/Signup';
 const router = createBrowserRouter([
   {
     path: '/',
@@ -15,6 +15,10 @@ const router = createBrowserRouter([
   {
     path:'/login',
     element: <LoginPage />
+  },
+  {
+    path:'/signup',
+    element: <SignupPage />
   },
   {
     element: <RootPage />,
