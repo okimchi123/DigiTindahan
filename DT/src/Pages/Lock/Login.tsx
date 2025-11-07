@@ -6,13 +6,17 @@ import { useKeyboardHeight } from '../../Hooks/CustomKH';
 import { useRef, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import gsap from 'gsap';
+import { useGSAP } from '@gsap/react';
+import { Link, useLocation } from 'react-router-dom';
 
 export default function LoginPage () {
   const keyboardHeight = useKeyboardHeight();
   const inputRef = useRef<HTMLInputElement | null>(null);
   const [username, setUsername] = useState('');
   const [modal, setModal] = useState(false);
+  const [floating, setFloating] = useState(false);
   const navigate = useNavigate();
+  const location = useLocation();
 
   useEffect(() => {
       if (inputRef.current) {
@@ -40,16 +44,56 @@ export default function LoginPage () {
     })
   };
 
+  const onSignUp = () => {
+    const tl = gsap.timeline();
+    tl.to('#add',{
+      duration: 0.1,
+      scale: 0,
+      opacity: 0,
+
+    }).to(
+      "#cont",
+      {
+        x: '-100%',
+        duration: 0.2,
+        ease: "power2.inOut",
+        onComplete: () => {
+          navigate('/signup');
+        }
+      }
+    );
+  }
+
+  useGSAP(() => {
+    const fromBack = location.state?.fromBack;
+    
+    gsap.fromTo('#cont',
+      { x: fromBack ? '-100%' : '100%' },
+      { 
+        x: 0,
+        duration: 0.3,
+        ease: 'power2.inOut',
+        onComplete: () => {
+          navigate(location.pathname, { state: {} });
+          setFloating(true);
+        },
+      }
+    );
+
+  }, []);
+
   return (
     <>
     {modal && <LockPage onClose={(()=>setModal(false))}/>}
-    <div className="container justify-center">
-      <header className="flex flex-col gap-2 items-center">
+    <div id='cont' className="container justify-center">
+      <header className="flex flex-col gap-2 mb-2 items-center">
         <img className="h-[130px] w-[72px]" src={LoginImage} alt="" />
         <h1 className="text-[20px] font-semibold tracking-wider">Login</h1>
       </header>
+      <p className='font-bold text-gray'>Don't have an account? <button type='button' onClick={onSignUp} className='text-primary'>Sign up here</button> </p>
     </div>
-    <FloatingInput
+    {floating && (
+      <FloatingInput
         className= "bg-primary z-20"
         keyboardHeight={keyboardHeight}
       >
@@ -77,7 +121,8 @@ export default function LoginPage () {
         </button>   
         </div>
       </FloatingInput>
+    )
+    }
     </>
-    
   );
 }
