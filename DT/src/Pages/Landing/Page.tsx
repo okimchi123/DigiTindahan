@@ -62,7 +62,7 @@ export default function LandingPage() {
             Continue
             <div
               id="arrow"
-              className="absolute p-1 bg-white rounded-full right-4 top-2"
+              className="absolute p-1 bg-white rounded-full right-4 top-2.5"
             >
               <ArrowRight size="22" color="black" />
             </div>
