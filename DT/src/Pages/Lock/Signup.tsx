@@ -6,13 +6,18 @@ import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
+import useRegisterUser from "../../Hooks/RegisterUser";
+import type { CreateUser } from "../../Model/User.interface";
 
 export default function SignupPage() {
   const INPUT_LENGTH = 4;
   const [code, setCode] = useState(["", "", "", ""]);
+  const [username, setUsername] = useState('');
   const inputRefs = useRef<(HTMLInputElement | null)[]>([]);
   const isProgrammaticFocus = useRef(false);
   const navigate = useNavigate();
+
+  const mutation = useRegisterUser();
 
   const handleChange = (index: number, value: string) => {
     if (value.length > 1) return;
@@ -29,6 +34,11 @@ export default function SignupPage() {
       }, 0);
     }
   };
+
+  const handleUsername = (e: React.ChangeEvent<HTMLInputElement>) => {
+    const value = e.target.value;
+    setUsername(value);
+  }
 
   const handleKeyDown = (
     index: number,
@@ -57,7 +67,11 @@ export default function SignupPage() {
 
   const handleSubmit = (e: React.FormEvent) => {
     e.preventDefault();
-    console.log("submited");
+    const Form: CreateUser = {
+      username: username,
+      passcode: code.join(""),
+    };
+    mutation.mutate(Form);
   };
 
   const handleBack = () => {
@@ -85,8 +99,9 @@ export default function SignupPage() {
 
   return (
     <div id="cont" className="container relative gap-5 items-start pt-5 px-5">
+      {mutation.error && <p className="text-red-500 text-xl absolute right-5 top-5">Username already exists</p>}
       <header className="flex flex-col">
-        <button onClick={handleBack} type="button">
+        <button className="self-start" onClick={handleBack} type="button">
           <img className="w-10 h-17 mb-5" src={logo} alt="Digitindahan" />
         </button>
         <h1 className="text-primary text-2xl font-bold">Create an account</h1>
@@ -99,6 +114,9 @@ export default function SignupPage() {
         <div className="relative mt-1 mb-3">
           <input
             className="bg-input rounded-xl py-4 w-full pl-12 text-lg text-gray"
+            value={username}
+            onChange={handleUsername}
+            name="username"
             type="text"
             id="username"
             placeholder="Enter your username"
@@ -126,13 +144,13 @@ export default function SignupPage() {
           ))}
         </div>
         <button
-          disabled={!code[3]}
+          disabled={!code[3] || !username || mutation.isPending}
           type="submit"
           className={clsx(
             "absolute bottom-5 left-5 w-[90%] transition-all text-white py-3 rounded-full",
             {
-              "bg-primary/70": !code[3],
-              "bg-primary": code[3],
+              "bg-primary/70": !code[3] || !username || mutation.isPending,
+              "bg-primary": code[3] && username,
             }
           )}
         >
