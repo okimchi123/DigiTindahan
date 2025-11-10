@@ -7,7 +7,8 @@ import { useRef, useEffect, useState } from 'react';
 import clsx from 'clsx';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
-import { Link, useLocation } from 'react-router-dom';
+import { useLocation } from 'react-router-dom';
+import useCheckUser from '../../Hooks/CheckUsername';
 
 export default function LoginPage () {
   const keyboardHeight = useKeyboardHeight();
@@ -17,6 +18,8 @@ export default function LoginPage () {
   const [floating, setFloating] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
+
+  const mutation = useCheckUser();
 
   useEffect(() => {
       if (inputRef.current) {
@@ -30,7 +33,15 @@ export default function LoginPage () {
   }
 
   const handleEnter = () => {
-    setModal(true);
+    const Form:{username:string}={
+      username: username,
+    }
+    mutation.mutate(Form,{
+      onSuccess:()=>{
+        setModal(true);
+      }
+    });
+    
   }
 
   const onClose = () => {
@@ -84,7 +95,7 @@ export default function LoginPage () {
 
   return (
     <>
-    {modal && <LockPage onClose={(()=>setModal(false))}/>}
+    {modal && <LockPage onClose={(()=>setModal(false))} username={username}/>}
     <div id='cont' className="container justify-center">
       <header className="flex flex-col gap-2 mb-2 items-center">
         <img className="h-[130px] w-[72px]" src={LoginImage} alt="" />
@@ -99,9 +110,10 @@ export default function LoginPage () {
       >
         <nav
           aria-label="Close dialog"
-          className="w-full flex items-center gap-1"
+          className="w-full flex items-end justify-between gap-1"
         >
           <h1 className="floating-h1  text-white">Username</h1>
+          {mutation.isError && <p className='font-bold text-gray-300'>Invalid Username</p>}
         </nav>
         <input
           name="username"
