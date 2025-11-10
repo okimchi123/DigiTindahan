@@ -10,4 +10,12 @@ const pool = mysql.createPool({
     database:process.env.MYSQL_DATABASE,
 });
 
-export default pool;
+const useUsername = async (username: string) => {
+    const [rows]: any = await pool.query(
+      "SELECT * FROM user WHERE BINARY username = ? LIMIT 1",
+      [username]
+    );
+    return rows;
+}
+
+export {pool, useUsername};
