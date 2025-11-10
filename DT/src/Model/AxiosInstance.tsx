@@ -75,7 +75,7 @@ axiosInstance.interceptors.response.use(
 
       try {
         const response = await axios.post(
-          `${BASE_URL}/auth/refresh`,
+          `${BASE_URL}/user/refresh`,
           {},
           { withCredentials: true }
         );
@@ -98,7 +98,7 @@ axiosInstance.interceptors.response.use(
         const { useAuthStore } = await import('../Auth/AuthStore');
         useAuthStore.getState().logout();
         
-        window.location.href = '/login';
+        window.location.href = '/';
         
         return Promise.reject(refreshError);
       } finally {
