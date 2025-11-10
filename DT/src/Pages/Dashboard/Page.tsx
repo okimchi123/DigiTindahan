@@ -1,11 +1,14 @@
 import DashHeader from "../../Components/Dashboard/Header";
 import Actions from "../../Model/Actions";
-import { ChevronRight } from "lucide-react";
+import { ChevronRight, Settings } from "lucide-react";
 import gsap from "gsap";
 import { useNavigate, useLocation } from "react-router-dom";
 import { useGSAP } from "@gsap/react";
-
+import SettingsModal from "../../Components/Dashboard/Settings";
+import { useState } from "react";
 export default function Dashboard () {
+
+  const [isSettings, setIsSettings] = useState(false);
   const navigate = useNavigate();
   const location = useLocation();
   
@@ -38,6 +41,14 @@ export default function Dashboard () {
   }, []);
 
   return (
+    <>
+    <div className="absolute top-4 right-5">
+      <button onClick={()=>setIsSettings((prev)=>!prev)}>
+      <Settings size='26' className="text-primary" />
+    </button>
+    {isSettings && <SettingsModal onClose={()=>setIsSettings(false)} />}
+    </div>
+    
     <div id="dashCont" className="container">
       <DashHeader />
       <section className="w-[83%] mt-2">
@@ -58,5 +69,6 @@ export default function Dashboard () {
         </div>
       </section>
     </div>
+    </>
   );
 }
