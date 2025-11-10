@@ -4,20 +4,22 @@ import { Delete } from "lucide-react";
 import clsx from "clsx";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import { useNavigate } from "react-router-dom";
+import useLoginUser from "../../Hooks/LoginUser";
+import type { CreateUser } from "../../Model/User.interface";
 
 interface props {
   onClose: () => void;
+  username: string;
 }
 
-const LockPage: React.FC<props> = ({ onClose }) => {
-  const navigate = useNavigate();
+const LockPage: React.FC<props> = ({ onClose, username }) => {
 
   const [code, setCode] = useState<String>("");
   const [invalid, setInvalid] = useState(false);
   const INPUT_LENGTH = 4;
-  const password = 1111;
   const numpadStyle = "h-17 w-17 border border-black text-[32px] rounded-full";
+
+  const mutation = useLoginUser();
 
   const toggleErr = () => {
     setInvalid(true);
@@ -42,11 +44,15 @@ const LockPage: React.FC<props> = ({ onClose }) => {
     const newCode = code + num.toString();
     setCode(newCode);
     if (newCode.length === INPUT_LENGTH) {
-      if (Number(newCode) === password) {
-        navigate("/dashboard");
-      } else {
-        toggleErr();
-      }
+      const Form: CreateUser = {
+            username: username,
+            passcode: newCode,
+          };
+      mutation.mutate(Form, {
+        onError: ()=> {
+          toggleErr();
+        }
+      })
     }
   };
 
