@@ -1,6 +1,6 @@
 import express from 'express';
-import pool from '../database/connection';
-import { RegisterUser } from '../Controller/Auth.controller';
+import {pool} from '../database/connection';
+import { RegisterUser, LoginUser, CheckUsername, AutoRefresh, LogoutUser } from '../Controller/Auth.controller';
 
 const router = express.Router();
 
@@ -14,4 +14,13 @@ router.get('/', async (req, res) => {
 });
 
 router.post('/register', RegisterUser);
+
+router.post('/login', LoginUser);
+
+router.post('/check-user', CheckUsername);
+
+router.post('/refresh', AutoRefresh);
+
+router.post('/logout', LogoutUser)
+
 export default router;
