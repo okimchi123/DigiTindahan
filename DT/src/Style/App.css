@@ -82,3 +82,6 @@ input:focus{
 @utility floating-h1{
   @apply font-bold text-lg tracking-wide;
 }
+@utility shadow-button{
+  @apply shadow-[-10px_-10px_30px_4px_rgba(0,100,0,0.1),10px_10px_30px_4px_rgba(0,100,0,0.15)];
+}
