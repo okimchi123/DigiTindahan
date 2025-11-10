@@ -3,41 +3,63 @@ import { ChevronLeft } from "lucide-react";
 import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
+import { useAuthStore } from "../../Auth/AuthStore";
+import { Navigate } from "react-router-dom";
 
 export default function RootPage() {
   const location = useLocation();
-  const {pathname} = location;
+  const { pathname } = location;
   const navigate = useNavigate();
 
+  const { isAuthenticated, user } = useAuthStore();
+
   const handleBack = () => {
-    const targetElement = document.querySelector('#animated-container');
+    const targetElement = document.querySelector("#animated-container");
 
     if (targetElement) {
       gsap.to(targetElement, {
-        x: '100%',
+        x: "100%",
         duration: 0.2,
-        ease: 'power2.inOut',
+        ease: "power2.inOut",
         onComplete: () => {
-          navigate('/dashboard', { state: { fromBack: true } });
-        }
+          navigate("/dashboard", { state: { fromBack: true } });
+        },
       });
     } else {
-      navigate('/dashboard', { state: { fromBack: true } });
+      navigate("/dashboard", { state: { fromBack: true } });
     }
   };
 
+  if (!isAuthenticated || !user) {
+    return <Navigate to="/" replace />;
+  }
+
   return (
-    <main id="mainPage" className="w-full h-full relative flex flex-col items-center justify-start">
-      <nav aria-label="main" className={clsx("py-4",{
-        "w-full":pathname !== '/dashboard',
-        "w-[83%]":pathname === '/dashboard',
-      })}>
+    <main
+      id="mainPage"
+      className="w-full h-full relative flex flex-col items-center justify-start"
+    >
+      <nav
+        aria-label="main"
+        className={clsx("py-4", {
+          "w-full": pathname !== "/dashboard",
+          "w-[83%]": pathname === "/dashboard",
+        })}
+      >
         <div className="flex items-center">
-          {pathname !== '/dashboard' && <button onClick={handleBack}><ChevronLeft size='31'/></button>}
-        <h1 className={`text-[18px] font-bold ${pathname !== '/dashboard' ? "mb-0.5":"mt-px"}`}>
-          <span className="text-primary">D</span>igi
-          <span className="text-primary">T</span>indahan
-        </h1>
+          {pathname !== "/dashboard" && (
+            <button onClick={handleBack}>
+              <ChevronLeft size="31" />
+            </button>
+          )}
+          <h1
+            className={`text-[18px] font-bold ${
+              pathname !== "/dashboard" ? "mb-0.5" : "mt-px"
+            }`}
+          >
+            <span className="text-primary">D</span>igi
+            <span className="text-primary">T</span>indahan
+          </h1>
         </div>
       </nav>
       <Outlet />
