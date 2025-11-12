@@ -75,8 +75,8 @@ const LoginUser = async (req: Request, res: Response) => {
     if (!isValidPasscode) {
       return res.status(400).json({ message: 'Invalid username or passcode' });
     }
-
-    const { accessToken, refreshToken } = generateTokens(user.id);
+    
+    const { accessToken, refreshToken } = generateTokens(user.user_id);
 
     res.cookie('refreshToken', refreshToken, {
       httpOnly: true,
@@ -106,12 +106,11 @@ const AutoRefresh = async (req: Request, res: Response) => {
   }
 
   jwt.verify(refreshToken, process.env.REFRESH_TOKEN_SECRET!, (err: any, decoded: any) => {
-    if (err) return res.sendStatus(403);
+  if (err) return res.sendStatus(403);
 
-    const {accessToken} = generateTokens(decoded.userId);
-
-    res.json({ accessToken });
-  });
+  const { accessToken } = generateTokens(decoded.userId);
+  res.json({ accessToken });
+});
 }
 
 const LogoutUser = async (req: Request, res: Response) => {
