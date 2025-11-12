@@ -8,7 +8,7 @@ import clsx from 'clsx';
 import gsap from 'gsap';
 import { useGSAP } from '@gsap/react';
 import { useLocation } from 'react-router-dom';
-import useCheckUser from '../../Hooks/AuthHooks/CheckUsername';
+import useCheckUser from '../../Hooks/AuthAPI/CheckUsername';
 
 export default function LoginPage () {
   const keyboardHeight = useKeyboardHeight();
