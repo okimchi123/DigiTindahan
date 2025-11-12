@@ -1,4 +1,4 @@
-import { axiosInstance } from "../Model/AxiosInstance";
+import { axiosInstance } from "../../Model/AxiosInstance";
 import { useMutation } from "@tanstack/react-query";
 
 interface CheckUser{

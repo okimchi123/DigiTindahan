@@ -1,8 +1,8 @@
-import { useAuthStore } from "../Auth/AuthStore";
+import { useAuthStore } from "../../Auth/AuthStore";
 import { useNavigate } from "react-router-dom";
 import { useMutation } from "@tanstack/react-query";
 import { useQueryClient } from "@tanstack/react-query";
-import { axiosInstance } from "../Model/AxiosInstance";
+import { axiosInstance } from "../../Model/AxiosInstance";
 
 const logoutUser = async (): Promise<void> => {
     await axiosInstance.post('/user/logout');

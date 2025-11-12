@@ -1,8 +1,8 @@
-import { axiosInstance } from "../Model/AxiosInstance";
+import { axiosInstance } from "../../Model/AxiosInstance";
 import { useMutation } from "@tanstack/react-query";
-import type { CreateUser } from "../Model/User.interface";
+import type { CreateUser } from "../../Model/User.interface";
 import { useNavigate } from "react-router-dom";
-import { useAuthStore } from "../Auth/AuthStore";
+import { useAuthStore } from "../../Auth/AuthStore";
 
 export interface AuthResponse {
   accessToken: string;
@@ -12,18 +12,18 @@ export interface AuthResponse {
   };
 }
 
-const registerUser = async (data: CreateUser): Promise<AuthResponse> => {
-  const res = await axiosInstance.post("/user/register", data);
+const loginUser = async (data: CreateUser): Promise<AuthResponse> => {
+  const res = await axiosInstance.post("/user/login", data);
   return res.data;
 };
 
-export default function useRegisterUser() {
+export default function useLoginUser() {
   const { setAuth } = useAuthStore();
   const navigate = useNavigate();
   return useMutation({
-    mutationFn: registerUser,
+    mutationFn: loginUser,
     onSuccess: (data) => {
-      console.log("Successfully Created");
+      console.log("Successfully Logged in");
       setAuth(data.accessToken, data.user);
       navigate("/dashboard");
     },

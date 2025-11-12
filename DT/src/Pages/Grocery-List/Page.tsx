@@ -12,7 +12,7 @@ export default function GroceryList() {
     setModal(true);
     setIsAdd(true);
   }
-
+  
   return (
     <>
     { modal && <Item isAdd={isAdd} onClose={()=>setModal(false)} />}

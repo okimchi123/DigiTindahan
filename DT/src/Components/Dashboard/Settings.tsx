@@ -1,6 +1,6 @@
 import { LogOut } from "lucide-react";
 import { useRef, useEffect } from "react";
-import { useLogout } from "../../Hooks/LogoutUser";
+import { useLogout } from "../../Hooks/AuthHooks/LogoutUser";
 
 interface props{
   onClose: ()=>void;

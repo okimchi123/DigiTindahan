@@ -4,7 +4,7 @@ import { Delete } from "lucide-react";
 import clsx from "clsx";
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import useLoginUser from "../../Hooks/LoginUser";
+import useLoginUser from "../../Hooks/AuthHooks/LoginUser";
 import type { CreateUser } from "../../Model/User.interface";
 
 interface props {

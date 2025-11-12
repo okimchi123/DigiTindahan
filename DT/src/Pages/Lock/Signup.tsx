@@ -6,7 +6,7 @@ import clsx from "clsx";
 import { useNavigate } from "react-router-dom";
 import gsap from "gsap";
 import { useGSAP } from "@gsap/react";
-import useRegisterUser from "../../Hooks/RegisterUser";
+import useRegisterUser from "../../Hooks/AuthHooks/RegisterUser";
 import type { CreateUser } from "../../Model/User.interface";
 
 export default function SignupPage() {
