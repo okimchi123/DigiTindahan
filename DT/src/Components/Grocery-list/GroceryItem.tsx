@@ -9,9 +9,10 @@ import clsx from "clsx";
 
 interface props {
   onClose: () => void;
+  listId: number | null;
 }
 
-const GroceryItem: React.FC<props> = ({ onClose }) => {
+const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
   const [isAddOpen, setIsAddOpen] = useState(false);
 
   const closeModal = () => {
