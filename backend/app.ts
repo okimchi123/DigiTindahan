@@ -1,6 +1,7 @@
 import express from 'express';
 import dotenv from 'dotenv';
 import AuthRoutes from './routes/Auth.routes'
+import GroceryRoutes from './routes/Grocery.routes'
 import cors from 'cors';
 import cookieParser from 'cookie-parser';
 
@@ -23,5 +24,6 @@ app.get('/', (req, res) => {
 });
 
 app.use('/user', AuthRoutes);
+app.use('/grocery', GroceryRoutes);
 
 app.listen(process.env.PORT, () =>console.log(`Server is active!`));
