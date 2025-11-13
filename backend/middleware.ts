@@ -2,12 +2,18 @@ import { Request, Response, NextFunction } from 'express';
 import jwt from 'jsonwebtoken';
 
 
-export interface AuthRequest extends Request {
-    userId: number;
+declare global {
+  namespace Express {
+    interface Request {
+      user?: {
+        userId: number;
+      };
+    }
+  }
 }
 
 export const authenticateToken = (
-  req: AuthRequest,
+  req: Request,
   res: Response,
   next: NextFunction
 ) => {
@@ -21,7 +27,7 @@ export const authenticateToken = (
     if (err) {
       return res.status(403).json({ message: 'Invalid or expired token' });
     }
-    req.userId = decoded.userId;
+    req.user = decoded;
     next();
   });
 };
