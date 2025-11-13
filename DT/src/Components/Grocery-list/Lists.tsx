@@ -4,11 +4,12 @@ import { useState } from "react";
 import { createPortal } from "react-dom";
 import useGroceryLists from "../../Hooks/GroceryListAPI/FetchGrocery";
 import dayjs from "dayjs";
+import type { GroceryListType } from "../../Hooks/GroceryListAPI/FetchGrocery";
 
 export default function Lists() {
   const [modal, setModal] = useState(false);
   const [selectedList, setSelectedList] = useState<number | null>(null);
-  const { data, isLoading, isError } = useGroceryLists();
+  const { data } = useGroceryLists();
 
   const onSelect = (i: number) => {
   setSelectedList(i)
@@ -22,15 +23,16 @@ export default function Lists() {
         <CustomSearch />
         {data?.length && (
           <ul className="flex flex-col gap-4">
-          {data.map((i) => (
+          {data.map((i: GroceryListType) => (
             <li key={i.created_at}>
               <button
               onClick={()=>onSelect(i.list_id)}
                 aria-haspopup="dialog"
-                className="bg-input w-full flex flex-col items-start py-4 pl-2 rounded-xl"
+                className="bg-input w-full flex flex-col items-start justify-center h-22 pl-2 rounded-xl"
               >
-                <h2 className="font-bold text-xl">{dayjs(i.list_name).format('MMMM D, YYYY')}</h2>
-                <p className="font-semibold text-gray text-lg">{i.latest_item} - {i.latest_item_quantity}</p>
+                <h2 className="font-bold text-xl">{dayjs(i.list_name).format('MMMM D, YYYY HH:MM A')}</h2>
+                {i.latest_item &&  <p className="font-semibold text-gray text-lg">{i.latest_item} - {i.latest_item_quantity}</p>}
+               
               </button>
             </li>
           ))}
