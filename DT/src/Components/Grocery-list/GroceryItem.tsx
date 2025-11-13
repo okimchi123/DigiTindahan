@@ -2,10 +2,12 @@ import AnimatedPage from "../UI/Animated-Container";
 import gsap from "gsap";
 import { ChevronLeft, Plus } from "lucide-react";
 import AddItem from "./Add-item";
-import { useState } from "react";
-import GroceryDummy from "../../Model/Dummy";
-import SingleItem from "./Single-Item";
+import { useEffect, useState } from "react";
+import { Check } from "lucide-react";
 import clsx from "clsx";
+import useItems from "../../Hooks/GroceryListAPI/FetchItems";
+import type { todoItem } from "../../Hooks/GroceryListAPI/FetchItems";
+import useClickItem from "../../Hooks/GroceryListAPI/ClickItem";
 
 interface props {
   onClose: () => void;
@@ -14,6 +16,16 @@ interface props {
 
 const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
   const [isAddOpen, setIsAddOpen] = useState(false);
+  const [data, setData] = useState<todoItem[]>([{
+    item_id: 0,
+    list_id: 0,
+    product_name: "",
+    product_quantity: 0,
+    is_completed: false,
+    created_at: "",
+  }]);
+  const getItemMutation = useItems();
+  const clickItemMutation = useClickItem();
 
   const closeModal = () => {
     gsap.to(".modal", {
@@ -25,6 +37,30 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
       },
     });
   };
+
+  useEffect(() => {
+    getItemMutation.mutate(
+      { list_id: listId },
+      {
+        onSuccess: (data) => {
+          setData(data);
+        },
+      }
+    );
+  }, [listId]);
+
+  const onClick = (e:todoItem) => {
+    clickItemMutation.mutate({value: e.is_completed ? false : true, item_id: e.item_id, list_id: e.list_id},{
+      onSuccess: ()=>{
+        getItemMutation.mutate({ list_id: listId },
+      {
+        onSuccess: (data) => {
+          setData(data);
+        },
+      });
+      }
+    });
+  }
 
   return (
     <>
@@ -42,24 +78,48 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
             </button>
             <h1 className="text-[18px] font-bold">Grocery To-Do List</h1>
           </div>
-          <button className="text-primary/70 font-bold p-1 text-lg">
-            Save
-          </button>
         </nav>
         <section className="w-[85%] flex flex-col gap-2 py-2">
-          {GroceryDummy.map((item) => (
-            <div
-              className={clsx("list-card", {
-                "border-input bg-input":item.checked,
-                "border-gray":!item.checked
-              })}
-              key={item.id}
-            >
-              <SingleItem item={item} />
-            </div>
-          ))}
+          {data[1] &&
+            data.map((item) => (
+              <div
+              onClick={()=>onClick(item)}
+                className={clsx("list-card", {
+                  "border-input bg-input": item.is_completed,
+                  "border-gray": !item.is_completed,
+                })}
+                key={item.item_id}
+              >
+                <div>
+                  <label className="flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="sr-only"
+                      checked={item.is_completed}
+                      readOnly
+                    />
+                    <div
+                      className={clsx(
+                        "w-9 h-9 rounded border-2 flex items-center justify-center",
+                        {
+                          "bg-white border-white": item.is_completed,
+                          "": !item.is_completed,
+                        }
+                      )}
+                    >
+                      {item.is_completed && <Check size="22" color="green" />}
+                    </div>
+                    <span>{item.product_name}</span>
+                  </label>
+                </div>
+                <span>{item.product_quantity}</span>
+              </div>
+            ))}
         </section>
-        <button onClick={()=>setIsAddOpen(true)} className="absolute bottom-10 right-10 p-3 bg-primary rounded-full">
+        <button
+          onClick={() => setIsAddOpen(true)}
+          className="absolute bottom-10 right-10 p-3 bg-primary rounded-full"
+        >
           <Plus size="26" color="white" />
         </button>
       </AnimatedPage>
