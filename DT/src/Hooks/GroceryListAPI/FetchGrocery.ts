@@ -1,7 +1,7 @@
 import { useQuery } from '@tanstack/react-query';
 import { axiosInstance } from '../../Model/AxiosInstance';
 
-export interface GroceryList {
+export interface GroceryListType {
   list_id: number;
   user_id: number;
   list_name: string;
@@ -11,7 +11,7 @@ export interface GroceryList {
   updated_at: string;
 }
 
-const getAllLists = async (): Promise<GroceryList[]> => {
+const getAllLists = async (): Promise<GroceryListType[]> => {
     const { data } = await axiosInstance.get('/grocery/');
     return data;
   }
