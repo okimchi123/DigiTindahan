@@ -16,14 +16,7 @@ interface props {
 
 const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
   const [isAddOpen, setIsAddOpen] = useState(false);
-  const [data, setData] = useState<todoItem[]>([{
-    item_id: 0,
-    list_id: 0,
-    product_name: "",
-    product_quantity: 0,
-    is_completed: false,
-    created_at: "",
-  }]);
+  const [data, setData] = useState<todoItem[] | null>(null);
   const getItemMutation = useItems();
   const clickItemMutation = useClickItem();
 
@@ -47,8 +40,7 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
         },
       }
     );
-  }, [listId]);
-
+  }, [listId, isAddOpen]);
   const onClick = (e:todoItem) => {
     clickItemMutation.mutate({value: e.is_completed ? false : true, item_id: e.item_id, list_id: e.list_id},{
       onSuccess: ()=>{
@@ -65,7 +57,7 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
   return (
     <>
       {isAddOpen && (
-        <AddItem isOpen={isAddOpen} onExit={() => setIsAddOpen(false)} />
+        <AddItem isOpen={isAddOpen} onExit={() => setIsAddOpen(false)} list_id={listId} />
       )}
       <AnimatedPage className="modal">
         <nav
@@ -80,7 +72,7 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
           </div>
         </nav>
         <section className="w-[85%] flex flex-col gap-2 py-2">
-          {data[1] &&
+          {data &&
             data.map((item) => (
               <div
               onClick={()=>onClick(item)}
