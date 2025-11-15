@@ -11,7 +11,7 @@ export interface todoItem {
 }
 
 const getAllItems = async (form: {list_id: number | null}): Promise<todoItem[]> => {
-    const { data } = await axiosInstance.post('/grocery/fetch-Items', form);
+    const { data } = await axiosInstance.post('/grocery/fetch-items', form);
     return data;
   }
 

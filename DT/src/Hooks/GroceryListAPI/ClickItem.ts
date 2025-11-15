@@ -12,7 +12,7 @@ interface formType{
 }
 
 const fetchClickItem = async (form: formType): Promise<promiseType[]> => {
-    const { data } = await axiosInstance.put('/grocery/click-Item', form);
+    const { data } = await axiosInstance.put('/grocery/click-item', form);
     return data;
   }
 
