@@ -32,7 +32,9 @@ export default function LoginPage () {
     setUsername(value);
   }
 
-  const handleEnter = () => {
+  const handleEnter = (e: React.FormEvent) => {
+    e.preventDefault();
+
     const Form:{username:string}={
       username: username,
     }
@@ -107,6 +109,7 @@ export default function LoginPage () {
       <FloatingInput
         className= "bg-primary z-20"
         keyboardHeight={keyboardHeight}
+        onSubmit={handleEnter}
       >
         <nav
           aria-label="Close dialog"
@@ -125,7 +128,7 @@ export default function LoginPage () {
         />
         <div className='flex justify-between text-white'>
             <button onClick={onClose}>back</button>
-        <button disabled={!username} onClick={handleEnter} className={clsx("font-bold p-1 transition-all",{
+        <button disabled={!username} type='submit' className={clsx("font-bold p-1 transition-all",{
             "text-black/50 text-md":!username,
             "text-white text-lg":username,
         })}>
