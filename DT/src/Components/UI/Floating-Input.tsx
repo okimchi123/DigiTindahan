@@ -1,14 +1,15 @@
 import { useGSAP } from "@gsap/react";
 import gsap from "gsap";
-import type { ReactNode } from "react";
+import type { ReactNode, FormEventHandler } from "react";
 
 interface AnimatedPageProps {
   children: ReactNode;
   className?: string;
   keyboardHeight: number;
+  onSubmit?: FormEventHandler<HTMLFormElement>;
 }
 
-const FloatingInput: React.FC<AnimatedPageProps> = ({ children, className = "", keyboardHeight = 0 }) => {
+const FloatingInput: React.FC<AnimatedPageProps> = ({ children, className = "", keyboardHeight = 0, onSubmit }) => {
   useGSAP(()=>{
     gsap.to('#add',
     { 
@@ -21,9 +22,9 @@ const FloatingInput: React.FC<AnimatedPageProps> = ({ children, className = "", 
   },[])
 
   return (
-    <div id="add" style={{bottom: `${keyboardHeight}px`}} className={`floating-input ${className}`}>
+    <form id="add" style={{bottom: `${keyboardHeight}px`}} className={`floating-input ${className}`} onSubmit={onSubmit}>
       {children}
-    </div>
+    </form>
   );
 }
 
