@@ -25,7 +25,7 @@ export default function LoginPage () {
       if (inputRef.current) {
         inputRef.current?.focus();
       }
-    }, []);
+    }, [inputRef.current]);
 
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const value = e.target.value;
