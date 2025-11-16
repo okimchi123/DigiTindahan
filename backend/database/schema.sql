@@ -1,7 +1,7 @@
 CREATE TABLE user (
     user_id INT PRIMARY KEY AUTO_INCREMENT,
     username VARCHAR(50) NOT NULL UNIQUE,
-    passcode CHAR(4) NOT NULL,
+    passcode VARCHAR(100) NOT NULL,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP
 );
 
