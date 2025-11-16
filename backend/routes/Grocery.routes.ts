@@ -1,6 +1,6 @@
 import express, {RequestHandler} from 'express';
 import { authenticateToken } from '../middleware';
-import { getGroceryList, addGroceryList, getItems, clickItem, AddItem } from '../Controller/Grocery.controller';
+import { getGroceryList, addGroceryList, getItems, clickItem, AddItem, deleteLists } from '../Controller/Grocery.controller';
 
 const router = express.Router();
 
@@ -12,6 +12,8 @@ router.post('/fetch-items', authenticateToken, getItems);
 
 router.put('/click-item', authenticateToken, clickItem);
 
-router.post('/add-item', authenticateToken, AddItem)
+router.post('/add-item', authenticateToken, AddItem);
+
+router.delete('/delete-lists', authenticateToken, deleteLists);
 
 export default router;
