@@ -33,7 +33,7 @@ const addGroceryList = async (req: Request, res: Response) => {
     const list_id = result.insertId;
     res.status(200).json({ list_id });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Adding of list error" });
   }
 };
 
@@ -51,7 +51,7 @@ const getItems = async (req: Request, res: Response) => {
     }));
     res.status(200).json(formattedItems);
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Fetch item error" });
   }
 };
 
@@ -65,7 +65,7 @@ const clickItem = async (req: Request, res: Response) => {
     );
     res.status(200).json({ message: "updated successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Update of item error" });
   }
 };
 
@@ -84,8 +84,27 @@ const AddItem = async (req: Request, res: Response) => {
 
     res.status(200).json({ message: "created item successfully" });
   } catch (error) {
-    res.status(500).json({ message: "Server error" });
+    res.status(500).json({ message: "Creation of item error" });
   }
 };
 
-export { getGroceryList, addGroceryList, getItems, clickItem, AddItem };
+const deleteLists = async (req: Request, res: Response) => {
+  const { ids } = req.body;
+
+  if (ids.length === 0) {
+    return res.status(400).json({ error: 'No IDs provided' });
+  }
+
+  try {
+    const placeholders = ids.map(() => '?').join(',');
+    const query = `DELETE FROM grocery_list WHERE list_id IN (${placeholders})`;
+
+    await pool.execute(query, ids);
+
+    res.status(200).json({ message: "deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Deletion Error" });
+  }
+}
+
+export { getGroceryList, addGroceryList, getItems, clickItem, AddItem, deleteLists };
