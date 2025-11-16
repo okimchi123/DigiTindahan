@@ -1,45 +1,108 @@
 import CustomSearch from "../UI/Search";
 import GroceryItem from "./GroceryItem";
-import { useState } from "react";
+import React, { useState } from "react";
 import { createPortal } from "react-dom";
 import useGroceryLists from "../../Hooks/GroceryListAPI/FetchGrocery";
 import dayjs from "dayjs";
 import type { GroceryListType } from "../../Hooks/GroceryListAPI/FetchGrocery";
+import clsx from "clsx";
+import { Check } from "lucide-react";
+import useDeleteLists from "../../Hooks/GroceryListAPI/DeleteLists";
 
-export default function Lists() {
+interface props {
+  isDelete: boolean;
+  onClose: ()=>void;
+}
+
+const Lists: React.FC<props> = ({ isDelete, onClose }) => {
   const [modal, setModal] = useState(false);
   const [selectedList, setSelectedList] = useState<number | null>(null);
   const { data } = useGroceryLists();
+  const [deleteItem, setDeleteItem] = useState<number[]>([]);
+
+  const { mutate } = useDeleteLists();
 
   const onSelect = (i: number) => {
-  setSelectedList(i)
-  setModal(true)
+    setSelectedList(i)
+    setModal(true)
   }
+
+  const handleClick = (e: number) => {
+    setDeleteItem(prev => prev.includes(e) ? prev.filter(id => id !== e) : [...prev, e]);
+  }
+
+  const checkStatus = (e: number) => {
+    return deleteItem.find(id => id === e);
+  }
+
+  const handleDelete = () => {
+    if (!deleteItem.length) return;
+    try {
+      mutate({ ids: deleteItem })
+    } catch (error) {
+      onClose();
+      return;
+    } finally{
+      onClose();
+    }
+    
+  };
 
   return (
     <>
-    { modal && createPortal(<GroceryItem onClose={()=>setModal(false)} listId={selectedList} />, document.getElementById('mainPage')!)}
+      {modal && selectedList !== null && createPortal(<GroceryItem onClose={() => setModal(false)} listId={selectedList} />, document.getElementById('mainPage')!)}
+      {isDelete && createPortal(
+        <button
+          onClick={handleDelete}
+           disabled={!deleteItem.length}
+           className={
+            clsx("fixed font-bold top-5 right-16 transition-all", {
+              "text-red-500 text-xl": deleteItem.length,
+              "text-gray text-lg": !deleteItem.length
+            })}> Delete all </button>, document.getElementById('mainPage')!)}
       <section className="flex flex-col gap-2 w-[80%]">
         <CustomSearch />
-        {data?.length && (
+        {data?.length ? (
           <ul className="flex flex-col gap-4">
-          {data.map((i: GroceryListType) => (
-            <li key={i.created_at}>
-              <button
-              onClick={()=>onSelect(i.list_id)}
-                aria-haspopup="dialog"
-                className="bg-input w-full flex flex-col items-start justify-center h-22 pl-2 rounded-xl"
-              >
-                <h2 className="font-bold text-xl">{dayjs(i.list_name).format('MMMM D, YYYY HH:MM A')}</h2>
-                {i.latest_item &&  <p className="font-semibold text-gray text-lg">{i.latest_item} - {i.latest_item_quantity}</p>}
-               
-              </button>
-            </li>
-          ))}
-        </ul>
-        )}
-        
+            {data.map((i: GroceryListType) => (
+              <li className="relative" key={i.created_at}>
+                {isDelete && (
+                  <label className="absolute -left-10 inset-0 flex items-center gap-2">
+                    <input
+                      type="checkbox"
+                      className="sr-only"
+                      onChange={() => handleClick(i.list_id)}
+                    />
+                    <div
+                      className={clsx(
+                        "w-9 h-9 rounded border-2 border-red-500 flex items-center justify-center transition-all",
+                        {
+                          "bg-red-500": checkStatus(i.list_id),
+                          "": !checkStatus(i.list_id),
+                        }
+                      )}
+                    >
+                      {checkStatus(i.list_id) && <Check size="22" color="white" />}
+                    </div>
+                  </label>
+                )}
+
+                <button
+                  onClick={() => onSelect(i.list_id)}
+                  aria-haspopup="dialog"
+                  className="bg-input select-none w-full flex flex-col items-start justify-center h-22 pl-2 rounded-xl"
+                >
+                  <h2 className="font-bold text-xl">{dayjs(i.list_name).format('MMMM D, YYYY hh:mm A')}</h2>
+                  {i.latest_item && <p className="font-semibold text-gray text-lg">{i.latest_item} - {i.latest_item_quantity}</p>}
+                </button>
+              </li>
+            ))}
+          </ul>
+        ) : <></>}
+
       </section>
     </>
   );
 }
+
+export default Lists;
