@@ -84,15 +84,9 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
               >
                 <div>
                   <label className="flex items-center gap-2">
-                    <input
-                      type="checkbox"
-                      className="sr-only"
-                      checked={item.is_completed}
-                      readOnly
-                    />
                     <div
                       className={clsx(
-                        "w-9 h-9 rounded border-2 flex items-center justify-center",
+                        "w-9 h-9 rounded border-2 border-primary flex items-center justify-center",
                         {
                           "bg-white border-white": item.is_completed,
                           "": !item.is_completed,
