@@ -73,7 +73,7 @@ const LoginUser = async (req: Request, res: Response) => {
     const isValidPasscode = await bcrypt.compare(passcode, user.passcode);
 
     if (!isValidPasscode) {
-      return res.status(400).json({ message: 'Invalid username or passcode' });
+      return res.status(400).json({ message: 'Invalid passcode' });
     }
     
     const { accessToken, refreshToken } = generateTokens(user.user_id);
