@@ -1,4 +1,4 @@
-import { Plus } from "lucide-react";
+import { Plus, Trash2 } from "lucide-react";
 import Lists from "../../Components/Grocery-list/Lists";
 import AnimatedPage from "../../Components/UI/Animated-Container";
 import { useState } from "react";
@@ -19,6 +19,7 @@ const fetchAddList = async (): Promise<promiseType> => {
 export default function GroceryList() {
   const [isAdd, setIsAdd] = useState(false);
   const [newListId, setNewListId] = useState(0);
+  const [isDelete, setIsDelete] = useState(false);
 
   const queryClient = useQueryClient();
 
@@ -45,6 +46,7 @@ export default function GroceryList() {
           <GroceryItem onClose={() => setIsAdd(false)} listId={newListId} />,
           document.getElementById("mainPage")!
         )}
+      <button onClick={()=>setIsDelete(prev=>!prev)} className="fixed top-4 right-5"> <Trash2 size='28' color="red"/> </button>
       <AnimatedPage className="container">
         <div className="header-cont gap-4">
           <h1 className="header-font">Grocery list</h1>
@@ -52,7 +54,7 @@ export default function GroceryList() {
             <Plus size="26" color="white" />
           </button>
         </div>
-        <Lists />
+        <Lists isDelete={isDelete} onClose={()=>setIsDelete(false)}/>
       </AnimatedPage>
     </>
   );
