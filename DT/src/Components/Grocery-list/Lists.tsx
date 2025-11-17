@@ -67,7 +67,7 @@ const Lists: React.FC<props> = ({ isDelete, onClose }) => {
             {data.map((i: GroceryListType) => (
               <li className="relative" key={i.created_at}>
                 {isDelete && (
-                  <label className="absolute -left-10 inset-0 flex items-center gap-2">
+                  <label className="absolute -left-9 inset-0 flex items-center gap-2">
                     <input
                       type="checkbox"
                       className="sr-only"
@@ -75,7 +75,7 @@ const Lists: React.FC<props> = ({ isDelete, onClose }) => {
                     />
                     <div
                       className={clsx(
-                        "w-9 h-9 rounded border-2 border-red-500 flex items-center justify-center transition-all",
+                        "w-7 h-7 rounded border-2 border-red-500 flex items-center justify-center transition-all",
                         {
                           "bg-red-500": checkStatus(i.list_id),
                           "": !checkStatus(i.list_id),
