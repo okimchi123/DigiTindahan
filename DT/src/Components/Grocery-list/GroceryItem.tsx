@@ -8,6 +8,7 @@ import clsx from "clsx";
 import useItems from "../../Hooks/GroceryListAPI/FetchItems";
 import type { todoItem } from "../../Hooks/GroceryListAPI/FetchItems";
 import useClickItem from "../../Hooks/GroceryListAPI/ClickItem";
+import { Trash2, Trash } from "lucide-react";
 
 interface props {
   onClose: () => void;
@@ -19,6 +20,21 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
   const [data, setData] = useState<todoItem[] | null>(null);
   const getItemMutation = useItems();
   const clickItemMutation = useClickItem();
+  const [isDelete, setIsDelete] = useState(false);
+  const [deleteItem, setDeleteItem] = useState<number[]>([])
+
+  const handleChoose = (e: number) => {
+    setDeleteItem(prev => prev.includes(e) ? prev.filter(id => id !== e) : [...prev, e]);
+  }
+
+  const checkStatus = (e: number) => {
+    return deleteItem.find(id => id === e);
+  }
+
+  const toggleDelete = () => {
+    setIsDelete(prev => !prev);
+    setDeleteItem([]);
+  }
 
   const closeModal = () => {
     gsap.to(".modal", {
@@ -41,15 +57,15 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
       }
     );
   }, [listId, isAddOpen]);
-  const onClick = (e:todoItem) => {
-    clickItemMutation.mutate({value: e.is_completed ? false : true, item_id: e.item_id, list_id: e.list_id},{
-      onSuccess: ()=>{
+  const onClick = (e: todoItem) => {
+    clickItemMutation.mutate({ value: e.is_completed ? false : true, item_id: e.item_id, list_id: e.list_id }, {
+      onSuccess: () => {
         getItemMutation.mutate({ list_id: listId },
-      {
-        onSuccess: (data) => {
-          setData(data);
-        },
-      });
+          {
+            onSuccess: (data) => {
+              setData(data);
+            },
+          });
       }
     });
   }
@@ -62,7 +78,7 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
       <AnimatedPage className="modal">
         <nav
           aria-label="Close dialog"
-          className="w-full flex justify-between pr-4 py-4"
+          className="w-full relative flex justify-between pr-4 py-4"
         >
           <div className="flex items-center">
             <button onClick={closeModal}>
@@ -70,32 +86,59 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
             </button>
             <h1 className="text-[18px] font-bold">Grocery To-Do List</h1>
           </div>
+          <div>
+            {isDelete && <button
+              className={
+                clsx("fixed font-bold top-5 right-16 transition-all", {
+                  "text-red-500 text-xl": deleteItem.length,
+                  "text-gray text-lg": !deleteItem.length
+                })}> Delete all </button>}
+
+            <button onClick={toggleDelete} type="button">
+              <Trash2 size='28' color="red" />
+            </button>
+          </div>
+
         </nav>
         <section className="w-[85%] flex flex-col gap-2 py-2">
           {data &&
             data.map((item) => (
               <div
-              onClick={()=>onClick(item)}
+                onClick={() => isDelete ? handleChoose(item.item_id) : onClick(item)}
                 className={clsx("list-card", {
                   "border-input bg-input": item.is_completed,
                   "border-gray": !item.is_completed,
+                  "border-red-400 bg-red-400":checkStatus(item.item_id)
                 })}
                 key={item.item_id}
               >
                 <div>
                   <label className="flex items-center gap-2">
-                    <div
-                      className={clsx(
-                        "w-9 h-9 rounded border-2 border-primary flex items-center justify-center",
-                        {
-                          "bg-white border-white": item.is_completed,
-                          "": !item.is_completed,
-                        }
-                      )}
-                    >
-                      {item.is_completed && <Check size="22" color="green" />}
-                    </div>
-                    <span>{item.product_name}</span>
+                    {isDelete ? (
+                      <div
+                        className={clsx(
+                          "w-9 h-9 rounded bg-white border-2 border-red-500 flex items-center justify-center",
+                          {
+                            " border-white": checkStatus(item.item_id),
+                            "": !checkStatus(item.item_id),
+                          }
+                        )}
+                      >
+                        {checkStatus(item.item_id) && <Trash size="22" color="red" />}
+                      </div>) : (
+                      <div
+                        className={clsx(
+                          "w-9 h-9 rounded border-2 border-primary flex items-center justify-center",
+                          {
+                            "bg-white border-white": item.is_completed,
+                            "": !item.is_completed,
+                          }
+                        )}
+                      >
+                        {item.is_completed && <Check size="22" color="green" />}
+                      </div>)}
+
+                    <span className={`${checkStatus(item.item_id) && 'text-white'}`}>{item.product_name}</span>
                   </label>
                 </div>
                 <span>{item.product_quantity}</span>
