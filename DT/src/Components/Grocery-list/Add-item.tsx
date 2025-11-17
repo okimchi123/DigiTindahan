@@ -28,7 +28,7 @@ const AddItem: React.FC<props> = ({ isOpen, onExit, list_id }) => {
     if (inputRef.current) {
       inputRef.current?.focus();
     }
-  }, []);
+  }, [inputRef.current]);
 
   const onClose = () => {
     gsap.to('#add',{
