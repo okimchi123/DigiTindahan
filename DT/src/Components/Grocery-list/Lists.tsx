@@ -6,19 +6,15 @@ import useGroceryLists from "../../Hooks/GroceryListAPI/FetchGrocery";
 import dayjs from "dayjs";
 import type { GroceryListType } from "../../Hooks/GroceryListAPI/FetchGrocery";
 import clsx from "clsx";
-import { Check } from "lucide-react";
+import { Check, Trash2 } from "lucide-react";
 import useDeleteLists from "../../Hooks/GroceryListAPI/DeleteLists";
 
-interface props {
-  isDelete: boolean;
-  onClose: ()=>void;
-}
-
-const Lists: React.FC<props> = ({ isDelete, onClose }) => {
+const Lists: React.FC = () => {
   const [modal, setModal] = useState(false);
   const [selectedList, setSelectedList] = useState<number | null>(null);
   const { data } = useGroceryLists();
   const [deleteItem, setDeleteItem] = useState<number[]>([]);
+  const [isDelete, setIsDelete] = useState(false);
 
   const { mutate } = useDeleteLists();
 
@@ -40,10 +36,10 @@ const Lists: React.FC<props> = ({ isDelete, onClose }) => {
     try {
       mutate({ ids: deleteItem })
     } catch (error) {
-      onClose();
+      setIsDelete(false);
       return;
     } finally{
-      onClose();
+      setIsDelete(false);
     }
     
   };
@@ -51,6 +47,7 @@ const Lists: React.FC<props> = ({ isDelete, onClose }) => {
   return (
     <>
       {modal && selectedList !== null && createPortal(<GroceryItem onClose={() => setModal(false)} listId={selectedList} />, document.getElementById('mainPage')!)}
+      {data?.length ? createPortal(<button onClick={()=>setIsDelete(prev=>!prev)} className="fixed top-4 right-5"> <Trash2 size='28' color="red"/> </button>, document.getElementById('mainPage')!) : <></>}
       {isDelete && createPortal(
         <button
           onClick={handleDelete}
