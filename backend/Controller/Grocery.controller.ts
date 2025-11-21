@@ -107,4 +107,23 @@ const deleteLists = async (req: Request, res: Response) => {
   }
 }
 
-export { getGroceryList, addGroceryList, getItems, clickItem, AddItem, deleteLists };
+const deleteItems = async (req: Request, res: Response) => {
+  const { ids } = req.body;
+
+  if (ids.length === 0) {
+    return res.status(400).json({ error: 'No IDs provided' });
+  }
+
+  try {
+    const placeholders = ids.map(() => '?').join(',');
+    const query = `DELETE FROM todo_item WHERE item_id IN (${placeholders})`;
+
+    await pool.execute(query, ids);
+
+    res.status(200).json({ message: "deleted successfully" });
+  } catch (error) {
+    res.status(500).json({ message: "Deletion Error" });
+  }
+}
+
+export { getGroceryList, addGroceryList, getItems, clickItem, AddItem, deleteLists, deleteItems };
