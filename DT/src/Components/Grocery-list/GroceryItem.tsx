@@ -9,6 +9,7 @@ import useItems from "../../Hooks/GroceryListAPI/FetchItems";
 import type { todoItem } from "../../Hooks/GroceryListAPI/FetchItems";
 import useClickItem from "../../Hooks/GroceryListAPI/ClickItem";
 import { Trash2, Trash } from "lucide-react";
+import useDeleteItems from "../../Hooks/GroceryListAPI/DeleteItems";
 
 interface props {
   onClose: () => void;
@@ -22,6 +23,9 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
   const clickItemMutation = useClickItem();
   const [isDelete, setIsDelete] = useState(false);
   const [deleteItem, setDeleteItem] = useState<number[]>([])
+  const [toggleFetch, setToggleFetch] = useState(false);
+
+  const {mutate} = useDeleteItems();
 
   const handleChoose = (e: number) => {
     setDeleteItem(prev => prev.includes(e) ? prev.filter(id => id !== e) : [...prev, e]);
@@ -35,6 +39,18 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
     setIsDelete(prev => !prev);
     setDeleteItem([]);
   }
+
+  const handleDelete = () => {
+    if (!deleteItem.length) return;
+
+      mutate({ ids: deleteItem }, {
+        onSuccess: ()=> {
+        setIsDelete(false);
+        setToggleFetch(prev => !prev);
+      },onError: () => {
+        setIsDelete(false);
+      }})
+  };
 
   const closeModal = () => {
     gsap.to(".modal", {
@@ -56,7 +72,8 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
         },
       }
     );
-  }, [listId, isAddOpen]);
+  }, [listId, isAddOpen, toggleFetch]);
+
   const onClick = (e: todoItem) => {
     clickItemMutation.mutate({ value: e.is_completed ? false : true, item_id: e.item_id, list_id: e.list_id }, {
       onSuccess: () => {
@@ -88,6 +105,7 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
           </div>
           <div>
             {isDelete && <button
+              onClick={handleDelete}
               className={
                 clsx("fixed font-bold top-5 right-16 transition-all", {
                   "text-red-500 text-xl": deleteItem.length,
