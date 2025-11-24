@@ -6,6 +6,7 @@ import NotFoundPage from "./Pages/NotFound/Page";
 import Dashboard from "./Pages/Dashboard/Page";
 import CalculateProfit from "./Pages/CalculateProfit/Page";
 import GroceryList from "./Pages/Grocery-List/Page";
+import CustomerList from "./Pages/Customer-List/Page";
 import LoginPage from "./Pages/Lock/Login";
 import SignupPage from "./Pages/Lock/Signup";
 import { useAutoRefresh } from "./Hooks/useAutoRefresh";
@@ -45,6 +46,10 @@ const router = createBrowserRouter([
       {
         path: "/grocery-list",
         element: <GroceryList />,
+      },
+      {
+        path: "/customer-credit",
+        element: <CustomerList />,
       },
     ],
   },
