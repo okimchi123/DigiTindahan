@@ -6,7 +6,7 @@ import useGroceryLists from "../../Hooks/GroceryListAPI/FetchGrocery";
 import dayjs from "dayjs";
 import type { GroceryListType } from "../../Hooks/GroceryListAPI/FetchGrocery";
 import clsx from "clsx";
-import { Check, Trash2 } from "lucide-react";
+import { Check, Trash2, ChevronRight } from "lucide-react";
 import useDeleteLists from "../../Hooks/GroceryListAPI/DeleteLists";
 
 const Lists: React.FC = () => {
@@ -87,10 +87,11 @@ const Lists: React.FC = () => {
                 <button
                   onClick={() => onSelect(i.list_id)}
                   aria-haspopup="dialog"
-                  className="bg-input select-none w-full flex flex-col items-start justify-center h-22 pl-2 rounded-xl"
+                  className="bg-white relative border-2 border-black select-none w-full flex flex-col items-start justify-center h-22 pl-2 rounded-xl"
                 >
                   <h2 className="font-bold text-xl">{dayjs(i.list_name).format('MMMM D, YYYY hh:mm A')}</h2>
                   {i.latest_item && <p className="font-semibold text-gray text-lg">{i.latest_item} - {i.latest_item_quantity}</p>}
+                <ChevronRight size='22' className="absolute right-1" />
                 </button>
               </li>
             ))}
