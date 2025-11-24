@@ -1,11 +1,11 @@
 import AnimatedPage from "../../Components/UI/Animated-Container";
+import ListHeader from "../../Components/UI/List-Header";
+import { Contact } from "lucide-react";
 
 export default function CustomerList() {
     return(
     <AnimatedPage>
-        <div className="header-cont">
-            <h1 className="header-font">Customer Credit</h1>
-        </div>
+        <ListHeader title="Customer Credit" addFunc={()=>console.log("add")} Icon={Contact}/>
     </AnimatedPage>
     )
 }
