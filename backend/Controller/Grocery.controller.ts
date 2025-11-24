@@ -126,4 +126,24 @@ const deleteItems = async (req: Request, res: Response) => {
   }
 }
 
-export { getGroceryList, addGroceryList, getItems, clickItem, AddItem, deleteLists, deleteItems };
+const finishedLists = async (req: Request, res: Response) => {
+  try {
+    const userId = req.user?.userId;
+    const [rows] = await pool.query(
+      `SELECT gl.list_id
+      FROM grocery_list gl
+      WHERE gl.user_id = ?
+      AND NOT EXISTS (
+       SELECT 1
+       FROM todo_item ti
+       WHERE ti.list_id = gl.list_id
+       AND ti.is_completed = 0
+   )`,
+      [userId]
+    ); res.status(200).json(rows);
+  } catch (error) {
+    res.status(500).json({ message: "Error in fetching finished lists" });
+  }
+}
+
+export { getGroceryList, addGroceryList, getItems, clickItem, AddItem, deleteLists, deleteItems, finishedLists };
