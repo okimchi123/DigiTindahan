@@ -8,6 +8,7 @@ import type { GroceryListType } from "../../Hooks/GroceryListAPI/FetchGrocery";
 import clsx from "clsx";
 import { Check, Trash2, ChevronRight } from "lucide-react";
 import useDeleteLists from "../../Hooks/GroceryListAPI/DeleteLists";
+import useFinishedLists from "../../Hooks/GroceryListAPI/CheckFinishedLists";
 
 const Lists: React.FC = () => {
   const [modal, setModal] = useState(false);
@@ -15,6 +16,8 @@ const Lists: React.FC = () => {
   const { data } = useGroceryLists();
   const [deleteItem, setDeleteItem] = useState<number[]>([]);
   const [isDelete, setIsDelete] = useState(false);
+  
+  const { data: finishedLists = [] } = useFinishedLists();
 
   const { mutate } = useDeleteLists();
 
@@ -41,8 +44,11 @@ const Lists: React.FC = () => {
     } finally{
       setIsDelete(false);
     }
-    
   };
+
+  const finishedListIds = new Set(
+    finishedLists.map(list => list.list_id)
+  );
 
   return (
     <>
@@ -87,7 +93,12 @@ const Lists: React.FC = () => {
                 <button
                   onClick={() => onSelect(i.list_id)}
                   aria-haspopup="dialog"
-                  className="bg-white relative border-2 border-black select-none w-full flex flex-col items-start justify-center h-22 pl-2 rounded-xl"
+                  className={clsx("relative select-none w-full flex flex-col items-start justify-center h-22 pl-2 rounded-xl",
+                    {
+                      "bg-input":finishedListIds.has(i.list_id),
+                      "bg-white border-2 border-black":!finishedListIds.has(i.list_id),
+                    }
+                  )}
                 >
                   <h2 className="font-bold text-xl">{dayjs(i.list_name).format('MMMM D, YYYY hh:mm A')}</h2>
                   {i.latest_item && <p className="font-semibold text-gray text-lg">{i.latest_item} - {i.latest_item_quantity}</p>}
