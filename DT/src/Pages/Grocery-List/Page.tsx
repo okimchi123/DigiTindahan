@@ -1,4 +1,4 @@
-import { Plus, Trash2 } from "lucide-react";
+import { ShoppingCart } from "lucide-react";
 import Lists from "../../Components/Grocery-list/Lists";
 import AnimatedPage from "../../Components/UI/Animated-Container";
 import { useState } from "react";
@@ -6,6 +6,7 @@ import { createPortal } from "react-dom";
 import GroceryItem from "../../Components/Grocery-list/GroceryItem";
 import { useMutation, useQueryClient } from "@tanstack/react-query";
 import { axiosInstance } from "../../Model/AxiosInstance";
+import ListHeader from "../../Components/UI/List-Header";
 
 interface promiseType {
   list_id: number;
@@ -46,12 +47,7 @@ export default function GroceryList() {
           document.getElementById("mainPage")!
         )}
       <AnimatedPage className="container">
-        <div className="header-cont gap-4">
-          <h1 className="header-font">Grocery list</h1>
-          <button onClick={onAdd} className="p-3 bg-primary rounded-full">
-            <Plus size="26" color="white" />
-          </button>
-        </div>
+        <ListHeader title="Grocery List" addFunc={onAdd} Icon={ShoppingCart}/>
         <Lists />
       </AnimatedPage>
     </>
