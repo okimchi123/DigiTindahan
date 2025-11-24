@@ -10,6 +10,16 @@ const pool = mysql.createPool({
     database:process.env.MYSQL_DATABASE,
 });
 
+(async () => {
+  try {
+    const connection = await pool.getConnection();
+    console.log("MySQL connected successfully!");
+    connection.release();
+  } catch (err: unknown) {
+    console.error("Error connecting to MySQL:", (err as Error).message);
+  }
+})();
+
 const useUsername = async (username: string) => {
     const [rows]: any = await pool.query(
       "SELECT * FROM user WHERE BINARY username = ? LIMIT 1",
