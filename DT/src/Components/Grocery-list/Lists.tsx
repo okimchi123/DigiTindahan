@@ -9,6 +9,8 @@ import clsx from "clsx";
 import { Check, Trash2, ChevronRight } from "lucide-react";
 import useDeleteLists from "../../Hooks/GroceryListAPI/DeleteLists";
 import useFinishedLists from "../../Hooks/GroceryListAPI/CheckFinishedLists";
+import { useGSAP } from "@gsap/react";
+import gsap from "gsap";
 
 const Lists: React.FC = () => {
   const [modal, setModal] = useState(false);
@@ -51,27 +53,64 @@ const Lists: React.FC = () => {
   );
 
   console.log(finishedLists)
+
+  useGSAP(() => {
+  if (isDelete) {
+    gsap.to("#delete-all", {
+      y: 0,
+      opacity: 1,
+      duration: 0.4,
+      ease: "power2.out"
+    });
+
+    gsap.to(".checkbox-wrapper", {
+      x: 0,
+      opacity: 1,
+      duration: 0.4,
+      ease: "power2.out",
+    });
+  }
+}, [isDelete]);
+
+const closeDelete = () => {
+  gsap.to("#delete-all", {
+      y: -130,
+      duration: 0.2,
+      ease: "power2.out",
+      onComplete:()=>{
+        setIsDelete(false);
+        setDeleteItem([]);
+      }
+    });
+
+    gsap.to(".checkbox-wrapper", {
+      x: -100,
+      duration: 0.2,
+      ease: "power2.out",
+    });
+}
+
   return (
     <>
       {modal && selectedList !== null && createPortal(<GroceryItem onClose={() => setModal(false)} listId={selectedList} />, document.getElementById('mainPage')!)}
-      {data?.length ? createPortal(<button onClick={()=>setIsDelete(prev=>!prev)} className="fixed z-2 top-4 right-5"> <Trash2 size='28' color="red"/> </button>, document.getElementById('mainPage')!) : <></>}
+      {data?.length ? createPortal(<button onClick={isDelete ? closeDelete : ()=>setIsDelete(true)} className="fixed z-2 top-4 right-5"> <Trash2 size='28' color="red"/> </button>, document.getElementById('mainPage')!) : <></>}
       {isDelete && createPortal(
         <button
           onClick={handleDelete}
+          id="delete-all"
            disabled={!deleteItem.length}
            className={
-            clsx("fixed z-2 font-bold top-5 right-16 transition-all", {
+            clsx("fixed -translate-y-5 z-2 font-bold top-5 right-17 transition-all", {
               "text-red-500 text-xl": deleteItem.length,
               "text-gray text-lg": !deleteItem.length
             })}> Delete all </button>, document.getElementById('mainPage')!)}
       <section className="flex flex-col gap-2 w-[80%]">
-        <CustomSearch />
         {data?.length ? (
           <ul className="flex flex-col gap-4">
             {data.map((i: GroceryListType) => (
               <li className="relative" key={i.created_at}>
                 {isDelete && (
-                  <label className="absolute -left-9 inset-0 flex items-center gap-2">
+                  <label className="absolute z-1 -left-9 inset-0 flex items-center gap-2">
                     <input
                       type="checkbox"
                       className="sr-only"
@@ -79,7 +118,7 @@ const Lists: React.FC = () => {
                     />
                     <div
                       className={clsx(
-                        "w-7 h-7 rounded border-2 border-red-500 flex items-center justify-center transition-all",
+                        "w-7 h-7 checkbox-wrapper -translate-x-5 rounded border-2 border-red-500 flex items-center justify-center transition-all",
                         {
                           "bg-red-500": checkStatus(i.list_id),
                           "": !checkStatus(i.list_id),
