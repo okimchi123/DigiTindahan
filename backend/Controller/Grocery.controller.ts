@@ -92,11 +92,11 @@ const deleteLists = async (req: Request, res: Response) => {
   const { ids } = req.body;
 
   if (ids.length === 0) {
-    return res.status(400).json({ error: 'No IDs provided' });
+    return res.status(400).json({ error: "No IDs provided" });
   }
 
   try {
-    const placeholders = ids.map(() => '?').join(',');
+    const placeholders = ids.map(() => "?").join(",");
     const query = `DELETE FROM grocery_list WHERE list_id IN (${placeholders})`;
 
     await pool.execute(query, ids);
@@ -105,17 +105,17 @@ const deleteLists = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ message: "Deletion Error" });
   }
-}
+};
 
 const deleteItems = async (req: Request, res: Response) => {
   const { ids } = req.body;
 
   if (ids.length === 0) {
-    return res.status(400).json({ error: 'No IDs provided' });
+    return res.status(400).json({ error: "No IDs provided" });
   }
 
   try {
-    const placeholders = ids.map(() => '?').join(',');
+    const placeholders = ids.map(() => "?").join(",");
     const query = `DELETE FROM todo_item WHERE item_id IN (${placeholders})`;
 
     await pool.execute(query, ids);
@@ -124,7 +124,7 @@ const deleteItems = async (req: Request, res: Response) => {
   } catch (error) {
     res.status(500).json({ message: "Deletion Error" });
   }
-}
+};
 
 const finishedLists = async (req: Request, res: Response) => {
   try {
@@ -133,17 +133,32 @@ const finishedLists = async (req: Request, res: Response) => {
       `SELECT gl.list_id
       FROM grocery_list gl
       WHERE gl.user_id = ?
-      AND NOT EXISTS (
-       SELECT 1
-       FROM todo_item ti
-       WHERE ti.list_id = gl.list_id
-       AND ti.is_completed = 0
-   )`,
+      AND EXISTS (
+      SELECT 1
+      FROM todo_item ti
+      WHERE ti.list_id = gl.list_id
+      )
+        AND NOT EXISTS (
+        SELECT 1
+        FROM todo_item ti
+        WHERE ti.list_id = gl.list_id
+        AND ti.is_completed = 0
+      )`,
       [userId]
-    ); res.status(200).json(rows);
+    );
+    res.status(200).json(rows);
   } catch (error) {
     res.status(500).json({ message: "Error in fetching finished lists" });
   }
-}
+};
 
-export { getGroceryList, addGroceryList, getItems, clickItem, AddItem, deleteLists, deleteItems, finishedLists };
+export {
+  getGroceryList,
+  addGroceryList,
+  getItems,
+  clickItem,
+  AddItem,
+  deleteLists,
+  deleteItems,
+  finishedLists,
+};
