@@ -41,7 +41,7 @@ export default function RootPage() {
     >
       <nav
         aria-label="main"
-        className={clsx("py-4 w-full bg-white z-1", {
+        className={clsx("py-4 w-full flex bg-white z-1", {
           "sticky top-0": pathname !== "/dashboard",
           "pl-7": pathname === "/dashboard",
         })}
