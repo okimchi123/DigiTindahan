@@ -41,14 +41,14 @@ export default function RootPage() {
     >
       <nav
         aria-label="main"
-        className={clsx("py-4", {
-          "w-full": pathname !== "/dashboard",
-          "w-[83%]": pathname === "/dashboard",
+        className={clsx("py-4 w-full bg-white z-1", {
+          "sticky top-0": pathname !== "/dashboard",
+          "pl-7": pathname === "/dashboard",
         })}
       >
-        <div className="flex items-center">
+        <div onClick={handleBack} className="flex items-center select-none">
           {pathname !== "/dashboard" && (
-            <button onClick={handleBack}>
+            <button>
               <ChevronLeft size="31" />
             </button>
           )}
