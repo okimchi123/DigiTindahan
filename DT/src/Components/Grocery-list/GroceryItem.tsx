@@ -87,6 +87,7 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
     });
   }
 
+
   return (
     <>
       {isAddOpen && (
@@ -97,8 +98,8 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
           aria-label="Close dialog"
           className="w-full relative flex justify-between pr-4 py-4"
         >
-          <div className="flex items-center">
-            <button onClick={closeModal}>
+          <div onClick={closeModal} className="flex items-center select-none">
+            <button>
               <ChevronLeft size="31" />
             </button>
             <h1 className="text-[18px] font-bold">Grocery To-Do List</h1>
@@ -118,7 +119,7 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
           </div>
 
         </nav>
-        <section className="w-[85%] flex flex-col gap-2 py-2">
+        <section className="w-[85%] max-h-[90%] overflow-y-auto flex flex-col gap-2 py-2">
           {data &&
             data.map((item) => (
               <div

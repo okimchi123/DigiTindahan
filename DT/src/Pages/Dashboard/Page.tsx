@@ -42,7 +42,7 @@ export default function Dashboard () {
 
   return (
     <>
-    <div className="absolute top-4 right-5">
+    <div className="absolute z-2 top-4 right-5">
       <button onClick={()=>setIsSettings((prev)=>!prev)}>
       <Settings size='26' className="text-primary" />
     </button>

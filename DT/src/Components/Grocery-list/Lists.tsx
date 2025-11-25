@@ -50,16 +50,17 @@ const Lists: React.FC = () => {
     finishedLists.map(list => list.list_id)
   );
 
+  console.log(finishedLists)
   return (
     <>
       {modal && selectedList !== null && createPortal(<GroceryItem onClose={() => setModal(false)} listId={selectedList} />, document.getElementById('mainPage')!)}
-      {data?.length ? createPortal(<button onClick={()=>setIsDelete(prev=>!prev)} className="fixed top-4 right-5"> <Trash2 size='28' color="red"/> </button>, document.getElementById('mainPage')!) : <></>}
+      {data?.length ? createPortal(<button onClick={()=>setIsDelete(prev=>!prev)} className="fixed z-2 top-4 right-5"> <Trash2 size='28' color="red"/> </button>, document.getElementById('mainPage')!) : <></>}
       {isDelete && createPortal(
         <button
           onClick={handleDelete}
            disabled={!deleteItem.length}
            className={
-            clsx("fixed font-bold top-5 right-16 transition-all", {
+            clsx("fixed z-2 font-bold top-5 right-16 transition-all", {
               "text-red-500 text-xl": deleteItem.length,
               "text-gray text-lg": !deleteItem.length
             })}> Delete all </button>, document.getElementById('mainPage')!)}
