@@ -89,13 +89,13 @@ const AddItem: React.FC<props> = ({ isOpen, onExit, list_id }) => {
         />
         <input
           name="product_quantity"
-          value={form.product_quantity}
+          value={form.product_quantity || ""}
           onChange={handleChange}
-          type="text"
+          type="number"
           placeholder="Quantity"
           className="input-design font-bold text-lg text-gray"
         />
-        <button disabled={!form.product_name && !form.product_quantity} type="submit" className={clsx("self-end  font-bold p-1 transition-all",{
+        <button disabled={!form.product_name || !form.product_quantity} type="submit" className={clsx("self-end  font-bold p-1 transition-all",{
           "text-primary text-lg":form.product_name && form.product_quantity,
           "text-primary/70 text-md":!form.product_name || !form.product_quantity
         })}>
