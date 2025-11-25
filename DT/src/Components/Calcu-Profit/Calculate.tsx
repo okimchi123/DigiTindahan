@@ -39,7 +39,7 @@ const Calculate: React.FC<props> = ({ form, setForm, setTotal, setProfit }) => {
           type="number"
           onChange={handleChange}
           name="POR"
-          value={form.POR}
+          value={form.POR || ""}
           id="ogprice"
           className="input-design"
           placeholder="0"
@@ -54,7 +54,7 @@ const Calculate: React.FC<props> = ({ form, setForm, setTotal, setProfit }) => {
           type="number"
           onChange={handleChange}
           name="QTY"
-          value={form.QTY}
+          value={form.QTY || ""}
           id="qnt"
           className="input-design"
           placeholder="0"
@@ -68,7 +68,7 @@ const Calculate: React.FC<props> = ({ form, setForm, setTotal, setProfit }) => {
           type="number"
           onChange={handleChange}
           name="SP"
-          value={form.SP}
+          value={form.SP || ""}
           id="sp"
           className="input-design"
           placeholder="0"
@@ -82,7 +82,7 @@ const Calculate: React.FC<props> = ({ form, setForm, setTotal, setProfit }) => {
           type="number"
           onChange={handleChange}
           name="PP"
-          value={form.PP}
+          value={form.PP || ""}
           id="pp"
           className="input-design"
           placeholder="0"
