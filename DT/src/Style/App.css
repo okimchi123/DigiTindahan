@@ -10,6 +10,11 @@ html, body, #root {
 input:focus{
   outline: 1px solid oklch(72.3% 0.219 149.579);
 }
+input[type="number"]::-webkit-inner-spin-button,
+input[type="number"]::-webkit-outer-spin-button {
+  @apply appearance-none;
+  margin: 0;
+}
 
 @font-face {
   font-family: 'Gilroy';
