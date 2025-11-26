@@ -25,3 +25,24 @@ CREATE TABLE todo_item (
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (list_id) REFERENCES grocery_list(list_id) ON DELETE CASCADE
 );
+
+CREATE TABLE customer_credit (
+    customer_id INT PRIMARY KEY AUTO_INCREMENT,
+    user_id INT NOT NULL,
+    customer_name VARCHAR(100) NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    updated_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP ON UPDATE CURRENT_TIMESTAMP,
+    FOREIGN KEY (user_id) REFERENCES user(user_id) ON DELETE CASCADE
+);
+
+CREATE TABLE product_credit (
+    product_credit_id INT PRIMARY KEY AUTO_INCREMENT,
+    customer_id INT NOT NULL,
+    product_name VARCHAR(100) NOT NULL,
+    product_quantity INT NOT NULL,
+    product_type VARCHAR(10) NOT NULL,
+    price INT NOT NULL,
+    date DATE NOT NULL,
+    created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
+    FOREIGN KEY (customer_id) REFERENCES customer_credit(customer_id) ON DELETE CASCADE
+);
