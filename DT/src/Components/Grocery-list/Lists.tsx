@@ -52,8 +52,6 @@ const Lists: React.FC = () => {
     finishedLists.map(list => list.list_id)
   );
 
-  console.log(finishedLists)
-
   useGSAP(() => {
   if (isDelete) {
     gsap.to("#delete-all", {
@@ -104,7 +102,7 @@ const closeDelete = () => {
               "text-red-500 text-xl": deleteItem.length,
               "text-gray text-lg": !deleteItem.length
             })}> Delete all </button>, document.getElementById('mainPage')!)}
-      <section className="flex flex-col gap-2 w-[80%]">
+      <section className="w-[80%]">
         {data?.length ? (
           <ul className="flex flex-col gap-4">
             {data.map((i: GroceryListType) => (
@@ -133,10 +131,10 @@ const closeDelete = () => {
                 <button
                   onClick={() => onSelect(i.list_id)}
                   aria-haspopup="dialog"
-                  className={clsx("relative select-none w-full flex flex-col items-start justify-center h-22 pl-2 rounded-xl",
+                  className={clsx("relative shadow-[0_3px_10px_rgb(0,0,0,0.2)] select-none w-full flex flex-col items-start justify-center h-22 pl-2 rounded-xl",
                     {
                       "bg-input":finishedListIds.has(i.list_id),
-                      "bg-white border-2 border-black":!finishedListIds.has(i.list_id),
+                      "bg-white":!finishedListIds.has(i.list_id),
                     }
                   )}
                 >
