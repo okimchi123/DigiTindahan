@@ -1,11 +1,11 @@
 import { useEffect, useRef, useState } from "react";
 import { X } from "lucide-react";
-import gsap from "gsap";
 import { useKeyboardHeight } from "../../Hooks/CustomKH";
 import FloatingInput from "../UI/Floating-Input";
 import useAddItem from "../../Hooks/GroceryListAPI/AddItem";
 import type { addItemType } from "../../Hooks/GroceryListAPI/AddItem";
 import clsx from "clsx";
+import closeFloatingInput from "../../Hooks/CloseFloatInput";
 
 interface props {
   isOpen: boolean;
@@ -30,17 +30,6 @@ const AddItem: React.FC<props> = ({ isOpen, onExit, list_id }) => {
     }
   }, [inputRef.current]);
 
-  const onClose = () => {
-    gsap.to('#add',{
-      duration: 0.1,
-      scale: 0,
-      opacity: 0,
-      onComplete: ()=>{
-      onExit();  
-      }
-    })
-  };
-
   const handleChange = (e: React.ChangeEvent<HTMLInputElement>) => {
     const {name, value} = e.target;
     setForm((prev)=>({
@@ -56,14 +45,13 @@ const AddItem: React.FC<props> = ({ isOpen, onExit, list_id }) => {
     } catch (error) {
       console.error(error);
     }finally{
-      onClose();
+      closeFloatingInput(onExit);
     }
-
   };
 
   return (
     <>
-      <div onClick={onClose} className="fixed inset-0 bg-black/10 z-31" />
+      <div onClick={()=>closeFloatingInput(onExit)} className="fixed inset-0 bg-black/10 z-31" />
       <FloatingInput
         className="bg-white z-31"
         keyboardHeight={keyboardHeight}
@@ -73,7 +61,7 @@ const AddItem: React.FC<props> = ({ isOpen, onExit, list_id }) => {
           aria-label="Close dialog"
           className="w-full flex items-center gap-1"
         >
-          <button type="button" className="p-1" onClick={onClose}>
+          <button type="button" className="p-1" onClick={()=>closeFloatingInput(onExit)}>
             <X size="24" />
           </button>
           <h1 className="floating-h1 text-black">New Item</h1>
