@@ -119,14 +119,14 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
           </div>
 
         </nav>
-        <section className="w-[85%] max-h-[90%] overflow-y-auto flex flex-col gap-2 py-2">
+        <section className="w-[88%] px-2 max-h-[90%] overflow-y-auto flex flex-col gap-2 py-2">
           {data &&
             data.map((item) => (
               <div
                 onClick={() => isDelete ? handleChoose(item.item_id) : onClick(item)}
                 className={clsx("list-card", {
                   "border-input bg-input": item.is_completed,
-                  "border-gray": !item.is_completed,
+                  "shadow-[0_3px_10px_rgb(0,0,0,0.2)]": !item.is_completed,
                   "border-red-400 bg-red-400":checkStatus(item.item_id)
                 })}
                 key={item.item_id}
