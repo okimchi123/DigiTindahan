@@ -1,4 +1,4 @@
-import { ShoppingCart } from "lucide-react";
+import { ShoppingCart, Plus } from "lucide-react";
 import Lists from "../../Components/Grocery-list/Lists";
 import AnimatedPage from "../../Components/UI/Animated-Container";
 import { useState } from "react";
@@ -47,7 +47,7 @@ export default function GroceryList() {
           document.getElementById("mainPage")!
         )}
       <AnimatedPage className="container">
-        <ListHeader title="Grocery List" addFunc={onAdd} Icon={ShoppingCart}/>
+        <ListHeader title="Grocery List" addFunc={onAdd} Icon={ShoppingCart} AddIcon={Plus}/>
         <Lists />
       </AnimatedPage>
     </>
