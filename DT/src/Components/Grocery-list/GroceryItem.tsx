@@ -1,5 +1,4 @@
 import AnimatedPage from "../UI/Animated-Container";
-import gsap from "gsap";
 import { ChevronLeft, Plus } from "lucide-react";
 import AddItem from "./Add-item";
 import { useEffect, useState } from "react";
@@ -10,6 +9,7 @@ import type { todoItem } from "../../Hooks/GroceryListAPI/FetchItems";
 import useClickItem from "../../Hooks/GroceryListAPI/ClickItem";
 import { Trash2, Trash } from "lucide-react";
 import useDeleteItems from "../../Hooks/GroceryListAPI/DeleteItems";
+import { closeModal } from "../../Hooks/CloseHelper";
 
 interface props {
   onClose: () => void;
@@ -52,17 +52,6 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
       }})
   };
 
-  const closeModal = () => {
-    gsap.to(".modal", {
-      x: "100%",
-      duration: 0.2,
-      ease: "power2.inOut",
-      onComplete: () => {
-        onClose();
-      },
-    });
-  };
-
   useEffect(() => {
     getItemMutation.mutate(
       { list_id: listId },
@@ -98,7 +87,7 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
           aria-label="Close dialog"
           className="w-full relative flex justify-between pr-4 py-4"
         >
-          <div onClick={closeModal} className="flex items-center select-none">
+          <div onClick={()=>closeModal(onClose)} className="flex items-center select-none">
             <button>
               <ChevronLeft size="31" />
             </button>
