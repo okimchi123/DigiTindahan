@@ -5,7 +5,7 @@ import FloatingInput from "../UI/Floating-Input";
 import useAddItem from "../../Hooks/GroceryListAPI/AddItem";
 import type { addItemType } from "../../Hooks/GroceryListAPI/AddItem";
 import clsx from "clsx";
-import closeFloatingInput from "../../Hooks/CloseFloatInput";
+import {closeFloatingInput} from "../../Hooks/CloseHelper";
 
 interface props {
   isOpen: boolean;
