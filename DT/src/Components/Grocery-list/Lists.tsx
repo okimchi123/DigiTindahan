@@ -138,8 +138,8 @@ const closeDelete = () => {
                     }
                   )}
                 >
-                  <h2 className="font-bold text-xl">{dayjs(i.list_name).format('MMMM D, YYYY hh:mm A')}</h2>
-                  {i.latest_item && <p className="font-semibold text-gray text-lg">{i.latest_item} - {i.latest_item_quantity}</p>}
+                  <h2 className="font-bold text-lg">{dayjs(i.list_name).format('MMMM D, YYYY hh:mm A')}</h2>
+                  {i.latest_item && !finishedListIds.has(i.list_id) && <p className="font-semibold text-gray text-lg">{i.latest_item} - {i.latest_item_quantity}</p>}
                 <ChevronRight size='22' className="absolute right-1" />
                 </button>
               </li>
