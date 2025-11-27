@@ -3,7 +3,7 @@ import ListHeader from "../../Components/UI/List-Header";
 import { Contact } from "lucide-react";
 import { UserPlus } from "lucide-react";
 import Lists from "../../Components/Customer-List/Lists";
-import AddUser from "../../Components/Customer-List/Add-user";
+import AddUser from "../../Components/Customer-List/Add-customer";
 import { useState } from "react";
 
 export default function CustomerList() {
