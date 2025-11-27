@@ -1,9 +1,10 @@
 import FloatingInput from "../UI/Floating-Input";
 import { useKeyboardHeight } from "../../Hooks/CustomKH";
-import closeFloatingInput from "../../Hooks/CloseFloatInput";
+import {closeFloatingInput} from "../../Hooks/CloseHelper";
 import { X } from "lucide-react";
 import { useState, useEffect, useRef } from "react";
 import clsx from "clsx";
+import useAddCustomer from "../../Hooks/CustomerAPI/AddCustomer";
 
 interface props {
   isOpen: boolean;
@@ -14,6 +15,21 @@ const AddUser: React.FC<props> = ({ isOpen, onExit }) => {
   const keyboardHeight = useKeyboardHeight(isOpen);
   const [customerName, setCustomerName] = useState("");
   const InputRef = useRef<HTMLInputElement | null>(null);
+
+  const { mutate } = useAddCustomer();
+
+  const handleSubmit = (e: React.FormEvent) => {
+    e.preventDefault();
+    if (!customerName.trim()) return;
+    mutate(
+      { customer_name: customerName },
+      {
+        onSuccess: () => {
+          closeFloatingInput(onExit);
+        },
+      }
+    );
+  };
 
   useEffect(() => {
     if (InputRef.current) {
@@ -30,7 +46,7 @@ const AddUser: React.FC<props> = ({ isOpen, onExit }) => {
       <FloatingInput
         className="bg-white z-31"
         keyboardHeight={keyboardHeight}
-        onSubmit={() => console.log("")}
+        onSubmit={handleSubmit}
       >
         <nav
           aria-label="Close dialog"
@@ -55,11 +71,11 @@ const AddUser: React.FC<props> = ({ isOpen, onExit }) => {
           className="input-design font-bold text-lg text-gray"
         />
         <button
-          disabled={!customerName}
+          disabled={!customerName.trim()}
           type="submit"
           className={clsx("self-end  font-bold p-1 transition-all", {
-            "text-primary text-lg": customerName,
-            "text-primary/70 text-md": !customerName,
+            "text-primary text-lg": customerName.trim(),
+            "text-primary/70 text-md": !customerName.trim(),
           })}
         >
           Add
