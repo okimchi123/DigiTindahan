@@ -42,6 +42,7 @@ CREATE TABLE product_credit (
     product_quantity INT NOT NULL,
     product_type VARCHAR(10) NOT NULL,
     price INT NOT NULL,
+    is_paid BOOLEAN DEFAULT FALSE,
     created_at TIMESTAMP DEFAULT CURRENT_TIMESTAMP,
     FOREIGN KEY (customer_id) REFERENCES customer_credit(customer_id) ON DELETE CASCADE
 );
