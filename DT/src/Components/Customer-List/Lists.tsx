@@ -7,7 +7,7 @@ import Customer from "./Customer";
 import { createPortal } from "react-dom";
 
 export interface selectedCustomerType {
-  customer_id: number;
+  customer_id: number | null;
   customer_name: string;
 }
 
