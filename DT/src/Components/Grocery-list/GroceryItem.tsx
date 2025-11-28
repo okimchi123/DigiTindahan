@@ -120,12 +120,11 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
                 })}
                 key={item.item_id}
               >
-                <div>
                   <label className="flex items-center gap-2">
                     {isDelete ? (
                       <div
                         className={clsx(
-                          "w-9 h-9 rounded bg-white border-2 border-red-500 flex items-center justify-center",
+                          "w-8 h-8 rounded bg-white border-2 border-red-500 flex items-center justify-center",
                           {
                             " border-white": checkStatus(item.item_id),
                             "": !checkStatus(item.item_id),
@@ -136,7 +135,7 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
                       </div>) : (
                       <div
                         className={clsx(
-                          "w-9 h-9 rounded border-2 border-primary flex items-center justify-center",
+                          "w-8 h-8 rounded border-2 border-primary flex items-center justify-center",
                           {
                             "bg-white border-white": item.is_completed,
                             "": !item.is_completed,
@@ -148,7 +147,6 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
 
                     <span className={`${checkStatus(item.item_id) && 'text-white'}`}>{item.product_name}</span>
                   </label>
-                </div>
                 <span>{item.product_quantity}</span>
               </div>
             ))}

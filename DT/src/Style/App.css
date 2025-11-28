@@ -79,7 +79,7 @@ input[type="number"]::-webkit-outer-spin-button {
   @apply flex flex-col items-start gap-px;
 }
 @utility list-card{
-  @apply flex items-center text-xl transition-all font-bold justify-between rounded-xl py-3 pl-2 pr-4;
+  @apply flex items-center text-xl transition-all font-bold justify-between rounded-xl py-4 pl-2 pr-4;
 }
 @utility floating-input{
   @apply fixed flex flex-col scale-0 gap-4 px-5 left-0 right-0 pt-5 pb-4 rounded-t-xl transition-all;
