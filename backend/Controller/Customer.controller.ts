@@ -27,4 +27,23 @@ const addCustomer = async (req: Request, res: Response) => {
     }
 }
 
-export {getCustomerList, addCustomer};
+const getCredits = async (req: Request, res: Response) => {
+  try {
+    const { customer_id } = req.body;
+
+    const [rows]: any = await pool.query(
+      "SELECT * FROM product_credit WHERE customer_id = ?",
+      [customer_id]
+    );
+
+    const formattedItems = rows.map((item: any) => ({
+      ...item,
+      is_paid: Boolean(item.is_paid),
+    }));
+    res.status(200).json(formattedItems);
+  } catch (error) {
+    res.status(500).json({ message: "Fetch item error" });
+  }
+};
+
+export {getCustomerList, addCustomer, getCredits};
