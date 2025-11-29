@@ -46,4 +46,16 @@ const getCredits = async (req: Request, res: Response) => {
   }
 };
 
-export {getCustomerList, addCustomer, getCredits};
+const AddCredit = async (req: Request, res: Response) => {
+  try {
+    const { customer_id, product_name, product_quantity, product_type, price } = req.body;
+
+    await pool.query("INSERT INTO product_credit (customer_id, product_name, product_quantity, product_type, price) values (?, ?, ?, ?, ?)",[customer_id, product_name, product_quantity, product_type, price]);
+  
+    res.status(200).json({customer_id});
+  } catch (error) {
+    res.status(500).json({ message: "Fetch item error" });
+  }
+};
+
+export {getCustomerList, addCustomer, getCredits, AddCredit};
