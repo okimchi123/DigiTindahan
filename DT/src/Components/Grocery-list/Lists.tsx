@@ -1,4 +1,3 @@
-import CustomSearch from "../UI/Search";
 import GroceryItem from "./GroceryItem";
 import React, { useState } from "react";
 import { createPortal } from "react-dom";
