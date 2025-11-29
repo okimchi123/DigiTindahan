@@ -7,15 +7,13 @@ import Customer from "./Customer";
 import { createPortal } from "react-dom";
 
 export interface selectedCustomerType {
-  customer_id: number | null;
+  customer_id: number;
   customer_name: string;
 }
 
 const Lists: React.FC = () => {
   const { data } = useCustomerList();
-  const [selectedCustomer, setSelectedCustomer] = useState<selectedCustomerType | null>(
-    null
-  );
+  const [selectedCustomer, setSelectedCustomer] = useState<selectedCustomerType>({customer_id: 0, customer_name:''});
   const [modal, setModal] = useState(false);
 
   const onSelect = (c: CustomerType) => {
@@ -28,7 +26,7 @@ const Lists: React.FC = () => {
 
   return (
     <>
-    {modal && selectedCustomer !==null && createPortal(<Customer customer={selectedCustomer} onClose={()=>setModal(false)} />, document.getElementById('mainPage')!)}
+    {modal && createPortal(<Customer customer={selectedCustomer} onClose={()=>setModal(false)} />, document.getElementById('mainPage')!)}
       <section className="w-[80%] flex flex-col gap-2">
         <CustomSearch />
         {data?.length ? (
