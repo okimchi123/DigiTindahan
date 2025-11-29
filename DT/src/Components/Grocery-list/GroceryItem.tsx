@@ -85,7 +85,7 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
       <AnimatedPage className="modal">
         <nav
           aria-label="Close dialog"
-          className="w-full relative flex justify-between pr-4 py-4"
+          className="w-full relative flex justify-between pr-4 py-4 shadow-nav mb-3"
         >
           <div onClick={()=>closeModal(onClose)} className="flex items-center select-none">
             <button>
