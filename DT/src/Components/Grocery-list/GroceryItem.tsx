@@ -98,9 +98,9 @@ const GroceryItem: React.FC<props> = ({ onClose, listId }) => {
               onClick={handleDelete}
               className={
                 clsx("fixed font-bold top-5 right-16 transition-all", {
-                  "text-red-500 text-xl": deleteItem.length,
-                  "text-gray text-lg": !deleteItem.length
-                })}> Delete all </button>}
+                  "text-red-500 text-lg": deleteItem.length,
+                  "text-gray text-md": !deleteItem.length
+                })}> Delete selected </button>}
 
             <button onClick={toggleDelete} type="button">
               <Trash2 size='28' color="red" />
