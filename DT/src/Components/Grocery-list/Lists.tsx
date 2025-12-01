@@ -97,10 +97,10 @@ const closeDelete = () => {
           id="delete-all"
            disabled={!deleteItem.length}
            className={
-            clsx("fixed -translate-y-5 z-2 font-bold top-5 right-17 transition-all", {
-              "text-red-500 text-xl": deleteItem.length,
-              "text-gray text-lg": !deleteItem.length
-            })}> Delete all </button>, document.getElementById('mainPage')!)}
+            clsx("fixed -translate-y-7 z-2 font-bold top-5 right-17 transition-all", {
+              "text-red-500 text-lg": deleteItem.length,
+              "text-gray text-md": !deleteItem.length
+            })}> Delete selected </button>, document.getElementById('mainPage')!)}
       <section className="w-[80%]">
         {data?.length ? (
           <ul className="flex flex-col gap-4">
